@@ -3,7 +3,9 @@
     "description": "Invoices generator",
     "type": "project",
     "require": {
-        "sprain/swiss-qr-bill": "^4.20"
+        "sprain/swiss-qr-bill": "^4.20",
+        "bramus/router": "^1.6",
+        "league/plates": "^3.6"
     },
     "autoload": {
         "psr-4": {
