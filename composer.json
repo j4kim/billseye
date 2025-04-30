@@ -1,0 +1,19 @@
+{
+    "name": "j4kim/billseye",
+    "description": "Invoices generator",
+    "type": "project",
+    "require": {
+        "sprain/swiss-qr-bill": "^4.20"
+    },
+    "autoload": {
+        "psr-4": {
+            "Billseye\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Joaquim Perez",
+            "email": "jivkim@gmail.com"
+        }
+    ]
+}

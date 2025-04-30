@@ -1,2 +1,3 @@
 callbacks/*/*.log
 .vscode
+/vendor/
