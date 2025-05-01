@@ -19,7 +19,7 @@ class QrBillGenerator
 
         $qrBill->setCreditorInformation(
             QrBill\DataGroup\Element\CreditorInformation::create(
-                'CH0709000000125733166'
+                $data['iban']
             )
         );
 
@@ -33,23 +33,33 @@ class QrBillGenerator
 
         $qrBill->setPaymentAmountInformation(
             QrBill\DataGroup\Element\PaymentAmountInformation::create(
-                'CHF',
-                250
+                $data['currency'],
+                $data['amount']
             )
         );
 
-        $qrBill->setPaymentReference(
-            QrBill\DataGroup\Element\PaymentReference::create(
-                QrBill\DataGroup\Element\PaymentReference::TYPE_SCOR,
-                QrBill\Reference\RfCreditorReferenceGenerator::generate('42')
-            )
-        );
+        if ($data['reference']) {
+            $qrBill->setPaymentReference(
+                QrBill\DataGroup\Element\PaymentReference::create(
+                    QrBill\DataGroup\Element\PaymentReference::TYPE_SCOR,
+                    QrBill\Reference\RfCreditorReferenceGenerator::generate($data['reference'])
+                )
+            );
+        } else {
+            $qrBill->setPaymentReference(
+                QrBill\DataGroup\Element\PaymentReference::create(
+                    QrBill\DataGroup\Element\PaymentReference::TYPE_NON
+                )
+            );
+        }
 
-        $qrBill->setAdditionalInformation(
-            QrBill\DataGroup\Element\AdditionalInformation::create(
-                'Software development'
-            )
-        );
+        if ($data['additional-information']) {
+            $qrBill->setAdditionalInformation(
+                QrBill\DataGroup\Element\AdditionalInformation::create(
+                    $data['additional-information']
+                )
+            );
+        }
 
         $output = new HtmlOutput($qrBill, 'fr');
 

@@ -4,7 +4,7 @@
     <h2>Creditor</h2>
 
     <p>
-        <label for="creditor-name">Nom</label>
+        <label for="creditor-name">name</label>
         <input type="text" name="creditor[name]" id="creditor-name" value="<?= @$_SESSION['creditor']['name'] ?>" required>
     </p>
 
@@ -33,10 +33,15 @@
         <input type="text" name="creditor[country]" id="creditor-country" value="<?= @$_SESSION['creditor']['country'] ?>" required>
     </p>
 
-    <h2>Creditor</h2>
+    <p>
+        <label for="iban">IBAN</label>
+        <input type="text" name="iban" id="iban" value="<?= @$_SESSION['iban'] ?>" required>
+    </p>
+
+    <h2>Debtor</h2>
 
     <p>
-        <label for="debtor-name">Nom</label>
+        <label for="debtor-name">name</label>
         <input type="text" name="debtor[name]" id="debtor-name" value="<?= @$_SESSION['debtor']['name'] ?>">
     </p>
 
@@ -63,6 +68,28 @@
     <p>
         <label for="debtor-country">country</label>
         <input type="text" name="debtor[country]" id="debtor-country" value="<?= @$_SESSION['debtor']['country'] ?>">
+    </p>
+
+    <h2>Payment</h2>
+
+    <p>
+        <label for="currency">currency</label>
+        <input type="text" name="currency" id="currency" value="<?= @$_SESSION['currency'] ?? 'CHF' ?>" required>
+    </p>
+
+    <p>
+        <label for="amount">amount</label>
+        <input type="number" name="amount" id="amount" value="<?= @$_SESSION['amount'] ?? 0 ?>" required>
+    </p>
+
+    <p>
+        <label for="reference">reference</label>
+        <input type="text" name="reference" id="reference" value="<?= @$_SESSION['reference'] ?>">
+    </p>
+
+    <p>
+        <label for="additional-information">additional-information</label>
+        <input type="text" name="additional-information" id="additional-information" value="<?= @$_SESSION['additional-information'] ?>">
     </p>
 
     <p>
