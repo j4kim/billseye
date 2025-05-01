@@ -24,5 +24,9 @@ class App
         $this->router->get('/', function () {
             echo $this->templates->render('home');
         });
+
+        $this->router->get('/generate-bill', function () {
+            echo QrBillGenerator::generate();
+        });
     }
 }
