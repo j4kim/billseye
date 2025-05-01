@@ -26,6 +26,7 @@ class App
         });
 
         $this->router->get('/generate-bill', function () {
+            $_SESSION = $_GET;
             echo QrBillGenerator::generate($_GET);
         });
     }
