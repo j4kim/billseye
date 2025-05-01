@@ -23,11 +23,13 @@ class QrBillGenerator
             )
         );
 
-        $qrBill->setUltimateDebtor(
-            QrBill\DataGroup\Element\StructuredAddress::createWithStreet(
-                ...$data['debtor']
-            )
-        );
+        if ($data['debtor']['name']) {
+            $qrBill->setUltimateDebtor(
+                QrBill\DataGroup\Element\StructuredAddress::createWithStreet(
+                    ...$data['debtor']
+                )
+            );
+        }
 
         $qrBill->setPaymentAmountInformation(
             QrBill\DataGroup\Element\PaymentAmountInformation::create(
