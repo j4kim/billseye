@@ -53,7 +53,14 @@ class QrBillGenerator
 
         $output = new HtmlOutput($qrBill, 'fr');
 
-        $html = $output->getPaymentPart();
+        try {
+            $html = $output->getPaymentPart();
+        } catch (\Exception) {
+            foreach ($qrBill->getViolations() as $violation) {
+                print $violation->getMessage() . "\n";
+            }
+            exit;
+        }
 
         return $html;
     }
