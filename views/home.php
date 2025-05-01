@@ -5,12 +5,12 @@
 
     <p>
         <label for="creditor-name">Nom</label>
-        <input type="text" name="creditor[name]" id="creditor-name" value="<?= @$_SESSION['creditor']['name'] ?>">
+        <input type="text" name="creditor[name]" id="creditor-name" value="<?= @$_SESSION['creditor']['name'] ?>" required>
     </p>
 
     <p>
         <label for="creditor-street">street</label>
-        <input type="text" name="creditor[street]" id="creditor-street" value="<?= @$_SESSION['creditor']['street'] ?>">
+        <input type="text" name="creditor[street]" id="creditor-street" value="<?= @$_SESSION['creditor']['street'] ?>" required>
     </p>
 
     <p>
@@ -20,17 +20,17 @@
 
     <p>
         <label for="creditor-postalCode">postalCode</label>
-        <input type="text" name="creditor[postalCode]" id="creditor-postalCode" value="<?= @$_SESSION['creditor']['postalCode'] ?>">
+        <input type="text" name="creditor[postalCode]" id="creditor-postalCode" value="<?= @$_SESSION['creditor']['postalCode'] ?>" required>
     </p>
 
     <p>
         <label for="creditor-city">city</label>
-        <input type="text" name="creditor[city]" id="creditor-city" value="<?= @$_SESSION['creditor']['city'] ?>">
+        <input type="text" name="creditor[city]" id="creditor-city" value="<?= @$_SESSION['creditor']['city'] ?>" required>
     </p>
 
     <p>
         <label for="creditor-country">country</label>
-        <input type="text" name="creditor[country]" id="creditor-country" value="<?= @$_SESSION['creditor']['country'] ?>">
+        <input type="text" name="creditor[country]" id="creditor-country" value="<?= @$_SESSION['creditor']['country'] ?>" required>
     </p>
 
     <h2>Creditor</h2>
