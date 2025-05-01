@@ -7,18 +7,13 @@ use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\HtmlOutput;
 
 class QrBillGenerator
 {
-    public static function generate()
+    public static function generate(array $data)
     {
         $qrBill = QrBill\QrBill::create();
 
         $qrBill->setCreditor(
             QrBill\DataGroup\Element\StructuredAddress::createWithStreet(
-                'Joaquim Perez',
-                'Rue Neuve',
-                '3',
-                '2300',
-                'La Chaux-de-Fonds',
-                'CH'
+                ...$data['creditor']
             )
         );
 
@@ -30,12 +25,7 @@ class QrBillGenerator
 
         $qrBill->setUltimateDebtor(
             QrBill\DataGroup\Element\StructuredAddress::createWithStreet(
-                'Pia-Maria Rutschmann-Schnyder',
-                'Grosse Marktgasse',
-                '28',
-                '9400',
-                'Rorschach',
-                'CH'
+                ...$data['debtor']
             )
         );
 
