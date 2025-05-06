@@ -117,8 +117,14 @@ Route::screen('customer', CustomerScreen::class)
 
 Route::screen('state', StateScreen::class)->name('state');
 
-Route::screen('invoice/{invoice?}', InvoiceEditScreen::class)
-    ->name('platform.invoice.edit');
-
 Route::screen('invoices', InvoiceListScreen::class)
-    ->name('platform.invoice.list');
+    ->name('platform.invoice.list')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail->parent('platform.index')->push('Invoices', route('platform.invoice.list'));
+    });
+
+Route::screen('invoice/{invoice?}', InvoiceEditScreen::class)
+    ->name('platform.invoice.edit')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail->parent('platform.invoice.list')->push('Invoice');
+    });;
