@@ -15,6 +15,7 @@ use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
+use App\Orchid\Screens\StateScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
@@ -110,4 +111,6 @@ Route::screen('customer', CustomerScreen::class)
         return $trail
             ->parent('platform.index')
             ->push('Customer');
-    });;
+    });
+
+Route::screen('state', StateScreen::class)->name('state');
