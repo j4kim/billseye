@@ -12,6 +12,8 @@ use App\Orchid\Screens\Examples\ExampleGridScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+use App\Orchid\Screens\InvoiceEditScreen;
+use App\Orchid\Screens\InvoiceListScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
@@ -114,3 +116,9 @@ Route::screen('customer', CustomerScreen::class)
     });
 
 Route::screen('state', StateScreen::class)->name('state');
+
+Route::screen('invoice/{invoice?}', InvoiceEditScreen::class)
+    ->name('platform.invoice.edit');
+
+Route::screen('invoices', InvoiceListScreen::class)
+    ->name('platform.invoice.list');
