@@ -34,6 +34,10 @@ class PlatformProvider extends OrchidServiceProvider
     public function menu(): array
     {
         return [
+            Menu::make('Accounts')
+                ->icon('person-badge')
+                ->route('platform.resource.list', ['account-resources']),
+
             Menu::make('Customers')
                 ->icon('people')
                 ->route('platform.customer'),

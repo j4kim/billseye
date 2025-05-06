@@ -97,6 +97,11 @@ class AccountResource extends Resource
         return [];
     }
 
+    public static function displayInNavigation(): bool
+    {
+        return false;
+    }
+
     /**
      * Action to create and update the model
      *
