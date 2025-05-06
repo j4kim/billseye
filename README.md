@@ -25,4 +25,4 @@ composer run dev
 
 ## Links
 
-[Data model](https://excalidraw.com/#json=wn0qeST1bgySaW-QlSFWE,eaTjHU1zXbdKaQt6k4cKVg)
+[Data model](https://excalidraw.com/#json=GYOVCN7I9WyWRmJ_kqBdO,DEosvJT1OpDZPIs8nFl6wg)
