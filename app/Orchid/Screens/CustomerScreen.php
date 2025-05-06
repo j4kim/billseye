@@ -2,7 +2,12 @@
 
 namespace App\Orchid\Screens;
 
+use App\Models\Customer;
+use Illuminate\Http\Request;
+use Orchid\Screen\Actions\ModalToggle;
+use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Screen;
+use Orchid\Support\Facades\Layout;
 
 class CustomerScreen extends Screen
 {
@@ -38,7 +43,12 @@ class CustomerScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+            ModalToggle::make('Add Customer')
+                ->modal('customerModal')
+                ->method('create')
+                ->icon('plus'),
+        ];
     }
 
     /**
@@ -48,6 +58,37 @@ class CustomerScreen extends Screen
      */
     public function layout(): iterable
     {
-        return [];
+        return [
+            Layout::modal('customerModal', Layout::rows([
+                Input::make('customer.name')
+                    ->title('Name')
+                    ->placeholder('Enter customer name')
+                    ->help('The name of the customer to be created.')
+            ]))
+                ->title('Create Customer')
+                ->applyButton('Add Customer'),
+        ];
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
+     */
+    public function create(Request $request)
+    {
+        // Validate form data, save task to database, etc.
+        $request->validate([
+            'customer.name' => 'required|max:255',
+        ]);
+
+        $c = new Customer();
+        $c->name = $request->input('customer.name');
+        $c->email = '';
+        $c->street = '';
+        $c->postal_code = '';
+        $c->city = '';
+        $c->country = '';
+        $c->save();
     }
 }
