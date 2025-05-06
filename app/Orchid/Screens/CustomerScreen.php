@@ -4,6 +4,7 @@ namespace App\Orchid\Screens;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Screen;
@@ -64,6 +65,14 @@ class CustomerScreen extends Screen
         return [
             Layout::table('customers', [
                 TD::make('name'),
+
+                TD::make('Actions')
+                    ->alignRight()
+                    ->render(function (Customer $customer) {
+                        return Button::make('Delete Customer')
+                            ->confirm('After deleting, the customer will be gone forever.')
+                            ->method('delete', ['customer' => $customer->id]);
+                    }),
             ]),
 
             Layout::modal('customerModal', Layout::rows([
@@ -97,5 +106,15 @@ class CustomerScreen extends Screen
         $c->city = '';
         $c->country = '';
         $c->save();
+    }
+
+    /**
+     * @param Customer $customer
+     *
+     * @return void
+     */
+    public function delete(Customer $customer)
+    {
+        $customer->delete();
     }
 }
