@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Screen;
+use Orchid\Screen\TD;
 use Orchid\Support\Facades\Layout;
 
 class CustomerScreen extends Screen
@@ -18,7 +19,9 @@ class CustomerScreen extends Screen
      */
     public function query(): iterable
     {
-        return [];
+        return [
+            'customers' => Customer::latest()->get(),
+        ];
     }
 
     /**
@@ -59,6 +62,10 @@ class CustomerScreen extends Screen
     public function layout(): iterable
     {
         return [
+            Layout::table('customers', [
+                TD::make('name'),
+            ]),
+
             Layout::modal('customerModal', Layout::rows([
                 Input::make('customer.name')
                     ->title('Name')
