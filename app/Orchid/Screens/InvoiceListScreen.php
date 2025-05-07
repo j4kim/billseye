@@ -39,8 +39,8 @@ class InvoiceListScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-            Link::make('Create new')
-                ->icon('pencil')
+            Link::make('Create Invoice')
+                ->icon('plus-circle')
                 ->route('platform.invoice.edit')
         ];
     }

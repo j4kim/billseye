@@ -2,11 +2,13 @@
 
 namespace App\Orchid\Screens;
 
+use App\Models\Account;
 use App\Models\Customer;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\DateTimer;
+use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Quill;
 use Orchid\Screen\Fields\Relation;
@@ -52,7 +54,7 @@ class InvoiceEditScreen extends Screen
     {
         return [
             Button::make('Create invoice')
-                ->icon('pencil')
+                ->icon('check-circle')
                 ->method('createOrUpdate')
                 ->canSee(!$this->invoice->exists),
 
@@ -77,30 +79,39 @@ class InvoiceEditScreen extends Screen
     {
         return [
             Layout::rows([
+
+                Group::make([
+                    Relation::make('invoice.account_id')
+                        ->title('Creditor')
+                        ->fromModel(Account::class, 'name'),
+
+                    Relation::make('invoice.customer_id')
+                        ->title('Debtor')
+                        ->fromModel(Customer::class, 'name'),
+                ]),
+
                 DateTimer::make('invoice.date')
                     ->title('Date')
                     ->format('Y-m-d'),
-
-                Relation::make('invoice.customer_id')
-                    ->title('Debtor')
-                    ->fromModel(Customer::class, 'name'),
 
                 Input::make('invoice.subject')
                     ->title('Subject')
                     ->help('What is the invoice about?'),
 
-                Select::make('invoice.currency')
-                    ->title('Curency')
-                    ->options(['CHF' => 'CHF', 'EUR' => 'EUR']),
+                Group::make([
+                    Select::make('invoice.currency')
+                        ->title('Curency')
+                        ->options(['CHF' => 'CHF', 'EUR' => 'EUR']),
 
-                Input::make('invoice.amount')
-                    ->title('Amount')
-                    ->type('number')
-                    ->help('The total amount of the invoice'),
+                    Input::make('invoice.amount')
+                        ->title('Amount')
+                        ->type('number')
+                        ->help('The total amount of the invoice'),
 
-                Input::make('invoice.discount')
-                    ->title('Discount')
-                    ->type('number'),
+                    Input::make('invoice.discount')
+                        ->title('Discount')
+                        ->type('number'),
+                ]),
 
                 Quill::make('invoice.footer')
                     ->title('Footer'),
