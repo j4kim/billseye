@@ -5,6 +5,7 @@ namespace App\Orchid\Resources;
 use Illuminate\Database\Eloquent\Model;
 use Orchid\Crud\Resource;
 use Orchid\Crud\ResourceRequest;
+use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
@@ -26,18 +27,26 @@ class AccountResource extends Resource
     public function fields(): array
     {
         return [
-            Input::make('name')->title('Name'),
-            Input::make('street')->title('Street'),
-            Input::make('building_number')->title('Building Number'),
-            Input::make('postal_code')->title('Postal Code'),
-            Input::make('city')->title('City'),
-            Input::make('country')->title('Country'),
-            Input::make('email')->title('Email'),
-            Input::make('iban')->title('IBAN'),
-            Input::make('smtp_config.smtp_host')->title('SMTP host'),
-            Input::make('smtp_config.smtp_port')->title('SMTP port'),
-            Input::make('smtp_config.smtp_username')->title('SMTP username'),
-            Input::make('smtp_config.smtp_password')->title('SMTP password'),
+            Group::make([
+                Input::make('name')->title('Name')->required(),
+                Input::make('email')->title('Email')->required(),
+            ]),
+            Group::make([
+                Input::make('street')->title('Street')->required(),
+                Input::make('building_number')->title('Building Number'),
+            ]),
+            Group::make([
+                Input::make('postal_code')->title('Postal Code')->required(),
+                Input::make('city')->title('City')->required(),
+                Input::make('country')->title('Country')->required(),
+            ]),
+            Input::make('iban')->title('IBAN')->required(),
+            Group::make([
+                Input::make('smtp_config.smtp_host')->title('SMTP host'),
+                Input::make('smtp_config.smtp_port')->title('SMTP port'),
+                Input::make('smtp_config.smtp_username')->title('SMTP username'),
+                Input::make('smtp_config.smtp_password')->title('SMTP password'),
+            ]),
         ];
     }
 

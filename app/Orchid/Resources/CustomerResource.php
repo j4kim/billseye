@@ -3,6 +3,7 @@
 namespace App\Orchid\Resources;
 
 use Orchid\Crud\Resource;
+use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
@@ -24,13 +25,19 @@ class CustomerResource extends Resource
     public function fields(): array
     {
         return [
-            Input::make('name')->title('Name'),
-            Input::make('street')->title('Street'),
-            Input::make('building_number')->title('Building Number'),
-            Input::make('postal_code')->title('Postal Code'),
-            Input::make('city')->title('City'),
-            Input::make('country')->title('Country'),
-            Input::make('email')->title('Email'),
+            Group::make([
+                Input::make('name')->title('Name')->required(),
+                Input::make('email')->title('Email'),
+            ]),
+            Group::make([
+                Input::make('street')->title('Street')->required(),
+                Input::make('building_number')->title('Building Number'),
+            ]),
+            Group::make([
+                Input::make('postal_code')->title('Postal Code')->required(),
+                Input::make('city')->title('City')->required(),
+                Input::make('country')->title('Country')->required(),
+            ]),
         ];
     }
 
