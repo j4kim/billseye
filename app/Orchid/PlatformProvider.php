@@ -40,7 +40,7 @@ class PlatformProvider extends OrchidServiceProvider
 
             Menu::make('Customers')
                 ->icon('people')
-                ->route('platform.customer'),
+                ->route('platform.resource.list', ['customer-resources']),
 
             Menu::make('Invoices')
                 ->icon('file-earmark-text')
