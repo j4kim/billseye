@@ -34,10 +34,10 @@ class AccountResource extends Resource
             Input::make('country')->title('Country'),
             Input::make('email')->title('Email'),
             Input::make('iban')->title('IBAN'),
-            Input::make('smtp_host')->title('SMTP host'),
-            Input::make('smtp_port')->title('SMTP port'),
-            Input::make('smtp_username')->title('SMTP username'),
-            Input::make('smtp_password')->title('SMTP password'),
+            Input::make('smtp_config.smtp_host')->title('SMTP host'),
+            Input::make('smtp_config.smtp_port')->title('SMTP port'),
+            Input::make('smtp_config.smtp_username')->title('SMTP username'),
+            Input::make('smtp_config.smtp_password')->title('SMTP password'),
         ];
     }
 
@@ -100,19 +100,5 @@ class AccountResource extends Resource
     public static function displayInNavigation(): bool
     {
         return false;
-    }
-
-    /**
-     * Action to create and update the model
-     *
-     * @param ResourceRequest $request
-     * @param Model           $model
-     */
-    public function onSave(ResourceRequest $request, Model $model)
-    {
-        $smtp_attrs = ['smtp_host', 'smtp_port', 'smtp_username', 'smtp_password'];
-        $model->forceFill($request->except($smtp_attrs));
-        $model->smtp_config = $request->only($smtp_attrs);
-        $model->save();
     }
 }
