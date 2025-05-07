@@ -27,10 +27,7 @@ class InvoiceListLayout extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('id', 'ID')->render(function (Invoice $invoice) {
-                return Link::make($invoice->id)
-                    ->route('platform.invoice.edit', $invoice);
-            }),
+            TD::make('id', 'ID'),
 
             TD::make('date', 'Date'),
 
@@ -45,6 +42,14 @@ class InvoiceListLayout extends Table
             }),
 
             TD::make('state', 'State'),
+
+            TD::make('Actions')
+                ->alignRight()
+                ->render(function (Invoice $invoice) {
+                    return Link::make('Edit')
+                        ->icon('pencil')
+                        ->route('platform.invoice.edit', $invoice);
+                }),
         ];
     }
 }
