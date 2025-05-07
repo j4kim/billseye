@@ -8,13 +8,7 @@ npm install && npm run build
 cp .env.example .env
 php artisan key:generate
 touch database/database.sqlite
-php artisan migrate
-```
-
-## Create admin user
-
-```
-php artisan orchid:admin
+php artisan migrate --seed
 ```
 
 ## Run
@@ -22,6 +16,10 @@ php artisan orchid:admin
 ```
 composer run dev
 ```
+
+Navigate to http://localhost:6412/admin.
+
+Log in using `admin@billseye.ch` / `admin`.
 
 ## Links
 
