@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Invoice;
 use App\Orchid\Screens\Examples\ExampleActionsScreen;
 use App\Orchid\Screens\Examples\ExampleCardsScreen;
 use App\Orchid\Screens\Examples\ExampleChartsScreen;
@@ -12,7 +13,6 @@ use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
 use App\Orchid\Screens\InvoiceEditScreen;
-use App\Orchid\Screens\InvoiceItemScreen;
 use App\Orchid\Screens\InvoiceListScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
@@ -126,3 +126,7 @@ Route::screen('invoice/{invoice}', InvoiceEditScreen::class)
     ->breadcrumbs(function (Trail $trail, $invoice) {
         return $trail->parent('platform.invoice.list')->push("Edit Invoice", route('platform.invoice.edit', $invoice));
     });
+
+Route::get('invoice/{invoice}/preview', function (Invoice $invoice) {
+    return view('invoice.preview', ['invoice' => $invoice]);
+});
