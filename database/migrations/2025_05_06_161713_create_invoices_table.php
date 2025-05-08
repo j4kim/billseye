@@ -25,6 +25,7 @@ return new class extends Migration
             $table->decimal('discount', 3, 2)->nullable();
             $table->text('footer')->nullable();
             $table->string('state');
+            $table->string('layout')->default('md');
         });
     }
 

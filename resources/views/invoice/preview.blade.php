@@ -34,12 +34,21 @@
 .invoice-preview .page-wrapper .page .content .footer p {
     margin-bottom: 0.5em;
 }
+.page.sm {
+    font-size: 9pt;
+}
+.page.sm .table>thead>tr>th {
+    padding: 0.5em;
+}
+.page.sm .table tbody tr td {
+    padding: 0.5em;
+}
 </style>
 
 <div>Invoice preview</div>
 <div class="invoice-preview">
     <div class="page-wrapper">
-        <div class="page">
+        <div class="page {{ $invoice->layout }}">
             <div class="content">
                 <div class="block">
                     <strong>{{ $invoice->account->name }}</strong><br>

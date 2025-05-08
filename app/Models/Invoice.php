@@ -16,17 +16,7 @@ class Invoice extends Model
     /**
      * @var array
      */
-    protected $fillable = [
-        'account_id',
-        'customer_id',
-        'date',
-        'subject',
-        'currency',
-        'amount',
-        'discount',
-        'footer',
-        'state',
-    ];
+    protected $guarded = [];
 
     protected function casts(): array
     {

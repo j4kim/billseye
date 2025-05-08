@@ -15,6 +15,7 @@ use Orchid\Screen\Fields\DateTimer;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Quill;
+use Orchid\Screen\Fields\RadioButtons;
 use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\Select;
 use Orchid\Screen\Screen;
@@ -127,14 +128,23 @@ class InvoiceEditScreen extends Screen
                     Quill::make('invoice.footer')
                         ->title('Footer'),
 
-                    Select::make('invoice.state')
-                        ->title('State')
-                        ->options([
-                            'Creating' => 'Creating',
-                            'Ready' => 'Ready',
-                            'Sent' => 'Sent',
-                            'Paid' => 'Paid'
-                        ]),
+                    Group::make([
+                        Select::make('invoice.state')
+                            ->title('State')
+                            ->options([
+                                'Creating' => 'Creating',
+                                'Ready' => 'Ready',
+                                'Sent' => 'Sent',
+                                'Paid' => 'Paid'
+                            ]),
+
+                        RadioButtons::make('invoice.layout')
+                            ->title('Layout')
+                            ->options([
+                                'sm' => 'small',
+                                'md' => 'medium',
+                            ]),
+                    ]),
                 ]),
 
                 'Invoice items' => [
