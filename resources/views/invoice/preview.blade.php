@@ -24,7 +24,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow: auto;
+    overflow: hidden;
 }
 .invoice-preview .page-wrapper .page .content .block.right {
     left: 50%;
