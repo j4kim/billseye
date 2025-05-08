@@ -140,7 +140,7 @@ class InvoiceEditScreen extends Screen
                 'Invoice items' => [
                     Layout::modal('addInvoiceItemModal', [
                         Layout::rows([
-                            Input::make('description')->title('Description'),
+                            Input::make('description')->title('Description')->required(),
                             Input::make('quantity')->title('Quantity')->type('number')->value(1),
                             Input::make('unit_price')->title('Unit price'),
                         ]),
