@@ -63,6 +63,28 @@
                     Date: {{ $invoice->date->format('d.m.Y') }}
                 </div>
             </div>
+            <div class="block">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Description</th>
+                            <th>Quantité</th>
+                            <th>Taux</th>
+                            <th>Montant</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($invoice->invoiceItems as $item)
+                            <tr>
+                                <td>{{ $item->description }}</td>
+                                <td>{{ $item->quantity }}</td>
+                                <td>{{ $item->unit_price }}</td>
+                                <td>{{ $item->total }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
             <h5 class="block" style="text-align: right; font-weight: 700">
                 <span style="padding-right: 2cm">Total</span>
                 {{ $invoice->formattedAmount }}
