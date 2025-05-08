@@ -3,6 +3,7 @@
 namespace App\Orchid\Layouts;
 
 use App\Models\Invoice;
+use App\View\Components\StateBadge;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
@@ -41,7 +42,7 @@ class InvoiceListLayout extends Table
                 return $invoice->amount . ' ' . $invoice->currency;
             }),
 
-            TD::make('state', 'State'),
+            TD::make('state', 'State')->component(StateBadge::class),
 
             TD::make('Actions')
                 ->alignRight()
