@@ -7,6 +7,7 @@ use Sprain\SwissQrBill\DataGroup\Element\CreditorInformation;
 use Sprain\SwissQrBill\DataGroup\Element\PaymentAmountInformation;
 use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
 use Sprain\SwissQrBill\DataGroup\Element\StructuredAddress;
+use Sprain\SwissQrBill\PaymentPart\Output\DisplayOptions;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\HtmlOutput;
 use Sprain\SwissQrBill\QrBill;
 use Sprain\SwissQrBill\Reference\RfCreditorReferenceGenerator;
@@ -70,7 +71,9 @@ class QrBillGenerator
         $output = new HtmlOutput($qrBill, 'fr');
 
         try {
-            $html = $output->getPaymentPart();
+            $html = $output
+                ->setDisplayOptions((new DisplayOptions)->setDisplayScissors(true))
+                ->getPaymentPart();
         } catch (\Exception) {
             foreach ($qrBill->getViolations() as $violation) {
                 print $violation->getMessage() . "\n";
