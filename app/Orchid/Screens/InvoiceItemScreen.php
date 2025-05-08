@@ -2,18 +2,27 @@
 
 namespace App\Orchid\Screens;
 
+use App\Models\InvoiceItem;
+use Illuminate\Http\Request;
+use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Screen;
+use Orchid\Support\Facades\Layout;
 
 class InvoiceItemScreen extends Screen
 {
+    public $invoiceItem;
+
     /**
      * Fetch data to be displayed on the screen.
      *
      * @return array
      */
-    public function query(): iterable
+    public function query(InvoiceItem $invoiceItem): iterable
     {
-        return [];
+        return [
+            'invoiceItem' => $invoiceItem
+        ];
     }
 
     /**
@@ -23,7 +32,7 @@ class InvoiceItemScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'InvoiceItemScreen';
+        return 'Invoice item';
     }
 
     /**
@@ -33,7 +42,15 @@ class InvoiceItemScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+            Button::make('Update')
+                ->icon('check-circle')
+                ->method('update'),
+
+            Button::make('Remove')
+                ->icon('trash')
+                ->method('remove'),
+        ];
     }
 
     /**
@@ -43,6 +60,23 @@ class InvoiceItemScreen extends Screen
      */
     public function layout(): iterable
     {
-        return [];
+        return [
+            Layout::rows([
+                Input::make('invoiceItem.description')->title("Description")->required(),
+                Input::make('invoiceItem.quantity')->title('Quantity')->type('number'),
+                Input::make('invoiceItem.unit_price')->title('Unit price'),
+            ])
+        ];
+    }
+    public function update(Request $request)
+    {
+        $this->invoiceItem->fill($request->invoiceItem)->save();
+        return redirect()->route('platform.invoice.edit', $this->invoiceItem->invoice_id);
+    }
+
+    public function remove()
+    {
+        $this->invoiceItem->delete();
+        return redirect()->route('platform.invoice.edit', $this->invoiceItem->invoice_id);
     }
 }
