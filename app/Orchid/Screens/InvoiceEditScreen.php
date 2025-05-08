@@ -5,8 +5,10 @@ namespace App\Orchid\Screens;
 use App\Models\Account;
 use App\Models\Customer;
 use App\Models\Invoice;
+use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\DateTimer;
 use Orchid\Screen\Fields\Group;
@@ -154,6 +156,13 @@ class InvoiceEditScreen extends Screen
                         TD::make('quantity'),
                         TD::make('unit_price', 'Unit price'),
                         TD::make('total'),
+                        TD::make('Actions')
+                            ->alignRight()
+                            ->render(function (InvoiceItem $ii) {
+                                return Link::make("Edit")
+                                    ->icon('pencil')
+                                    ->route('platform.invoice-item', [$ii->invoice_id, $ii->id]);
+                            }),
                     ])
                 ],
 

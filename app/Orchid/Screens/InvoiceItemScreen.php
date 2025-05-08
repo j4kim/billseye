@@ -2,12 +2,9 @@
 
 namespace App\Orchid\Screens;
 
-use App\Models\Invoice;
-use App\Orchid\Layouts\InvoiceListLayout;
-use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
 
-class InvoiceListScreen extends Screen
+class InvoiceItemScreen extends Screen
 {
     /**
      * Fetch data to be displayed on the screen.
@@ -16,9 +13,7 @@ class InvoiceListScreen extends Screen
      */
     public function query(): iterable
     {
-        return [
-            'invoices' => Invoice::paginate(),
-        ];
+        return [];
     }
 
     /**
@@ -28,7 +23,7 @@ class InvoiceListScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Invoices';
+        return 'InvoiceItemScreen';
     }
 
     /**
@@ -38,11 +33,7 @@ class InvoiceListScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [
-            Link::make('Create Invoice')
-                ->icon('plus-circle')
-                ->route('platform.invoice.new')
-        ];
+        return [];
     }
 
     /**
@@ -52,8 +43,6 @@ class InvoiceListScreen extends Screen
      */
     public function layout(): iterable
     {
-        return [
-            InvoiceListLayout::class
-        ];
+        return [];
     }
 }

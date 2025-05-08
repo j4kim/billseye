@@ -12,6 +12,7 @@ use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
 use App\Orchid\Screens\InvoiceEditScreen;
+use App\Orchid\Screens\InvoiceItemScreen;
 use App\Orchid\Screens\InvoiceListScreen;
 use App\Orchid\Screens\PlatformScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
@@ -114,8 +115,20 @@ Route::screen('invoices', InvoiceListScreen::class)
         return $trail->parent('platform.index')->push('Invoices', route('platform.invoice.list'));
     });
 
-Route::screen('invoice/{invoice?}', InvoiceEditScreen::class)
-    ->name('platform.invoice.edit')
+Route::screen('invoice/new', InvoiceEditScreen::class)
+    ->name('platform.invoice.new')
     ->breadcrumbs(function (Trail $trail) {
-        return $trail->parent('platform.invoice.list')->push('Invoice');
-    });;
+        return $trail->parent('platform.invoice.list')->push("New Invoice");
+    });
+
+Route::screen('invoice/{invoice}', InvoiceEditScreen::class)
+    ->name('platform.invoice.edit')
+    ->breadcrumbs(function (Trail $trail, $invoice) {
+        return $trail->parent('platform.invoice.list')->push("Edit Invoice", route('platform.invoice.edit', $invoice));
+    });
+
+Route::screen('invoice/{invoice}/item/{invoiceItem}', InvoiceItemScreen::class)
+    ->name('platform.invoice-item')
+    ->breadcrumbs(function (Trail $trail, $invoice) {
+        return $trail->parent('platform.invoice.edit', $invoice)->push("Invoice item");
+    });
