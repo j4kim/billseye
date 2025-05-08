@@ -182,6 +182,7 @@ class InvoiceEditScreen extends Screen
                                         Button::make('Up')->icon('arrow-up')->method('moveInvoiceItem', ['itemId' => $ii->id, 'direction' => 'up'])->canSee(!$loop->first),
                                         Button::make('Down')->icon('arrow-down')->method('moveInvoiceItem', ['itemId' => $ii->id, 'direction' => 'down'])->canSee(!$loop->last),
                                         Link::make('Edit')->icon('pencil')->route('platform.invoice-item', [$ii->invoice_id, $ii->id]),
+                                        Button::make('Remove')->icon('trash')->method('removeInvoiceItem', ['itemId' => $ii->id]),
                                     ]);
                             }),
                     ])
@@ -227,6 +228,12 @@ class InvoiceEditScreen extends Screen
             ...$request->all(),
             'order' => ($last?->order ?? 0) + 128
         ]);
+    }
+
+    public function removeInvoiceItem(Request $request)
+    {
+        $ii = InvoiceItem::find($request->itemId);
+        $ii->delete();
     }
 
     public function moveInvoiceItem(Request $request)
