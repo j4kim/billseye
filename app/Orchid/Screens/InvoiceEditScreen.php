@@ -53,13 +53,13 @@ class InvoiceEditScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-            Button::make('Create invoice')
+            Button::make('Create Invoice')
                 ->icon('check-circle')
                 ->method('createOrUpdate')
                 ->canSee(!$this->invoice->exists),
 
-            Button::make('Update')
-                ->icon('note')
+            Button::make('Update Invoice')
+                ->icon('check-circle')
                 ->method('createOrUpdate')
                 ->canSee($this->invoice->exists),
 
