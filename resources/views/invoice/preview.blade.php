@@ -1,7 +1,4 @@
 <style>
-*:has(>.invoice-preview) {
-    min-width:0;
-}
 .invoice-preview {
     overflow: auto;
 }

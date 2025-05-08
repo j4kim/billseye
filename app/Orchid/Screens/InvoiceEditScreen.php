@@ -78,19 +78,19 @@ class InvoiceEditScreen extends Screen
     public function layout(): iterable
     {
         return [
-            Layout::columns([
-                'left column' => Layout::rows([
+            Layout::rows([
 
-                    Group::make([
-                        Relation::make('invoice.account_id')
-                            ->title('Creditor')
-                            ->fromModel(Account::class, 'name'),
+                Group::make([
+                    Relation::make('invoice.account_id')
+                        ->title('Creditor')
+                        ->fromModel(Account::class, 'name'),
 
-                        Relation::make('invoice.customer_id')
-                            ->title('Debtor')
-                            ->fromModel(Customer::class, 'name'),
-                    ]),
+                    Relation::make('invoice.customer_id')
+                        ->title('Debtor')
+                        ->fromModel(Customer::class, 'name'),
+                ]),
 
+                Group::make([
                     DateTimer::make('invoice.date')
                         ->title('Date')
                         ->format('Y-m-d'),
@@ -98,37 +98,37 @@ class InvoiceEditScreen extends Screen
                     Input::make('invoice.subject')
                         ->title('Subject')
                         ->help('What is the invoice about?'),
-
-                    Group::make([
-                        Select::make('invoice.currency')
-                            ->title('Curency')
-                            ->options(['CHF' => 'CHF', 'EUR' => 'EUR']),
-
-                        Input::make('invoice.amount')
-                            ->title('Amount')
-                            ->type('number')
-                            ->help('The total amount of the invoice'),
-
-                        Input::make('invoice.discount')
-                            ->title('Discount')
-                            ->type('number'),
-                    ]),
-
-                    Quill::make('invoice.footer')
-                        ->title('Footer'),
-
-                    Select::make('invoice.state')
-                        ->title('State')
-                        ->options([
-                            'Creating' => 'Creating',
-                            'Ready' => 'Ready',
-                            'Sent' => 'Sent',
-                            'Paid' => 'Paid'
-                        ]),
                 ]),
 
-                'right column' => Layout::view('invoice.preview'),
-            ])
+                Group::make([
+                    Select::make('invoice.currency')
+                        ->title('Curency')
+                        ->options(['CHF' => 'CHF', 'EUR' => 'EUR']),
+
+                    Input::make('invoice.amount')
+                        ->title('Amount')
+                        ->type('number')
+                        ->help('The total amount of the invoice'),
+
+                    Input::make('invoice.discount')
+                        ->title('Discount')
+                        ->type('number'),
+                ]),
+
+                Quill::make('invoice.footer')
+                    ->title('Footer'),
+
+                Select::make('invoice.state')
+                    ->title('State')
+                    ->options([
+                        'Creating' => 'Creating',
+                        'Ready' => 'Ready',
+                        'Sent' => 'Sent',
+                        'Paid' => 'Paid'
+                    ]),
+            ]),
+
+            Layout::view('invoice.preview')
         ];
     }
 
