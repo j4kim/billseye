@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use NumberFormatter;
 use Orchid\Screen\AsSource;
 
 class Invoice extends Model
@@ -39,9 +38,8 @@ class Invoice extends Model
 
     protected function formattedAmount(): Attribute
     {
-        $formatter = new NumberFormatter(config("app.locale"), NumberFormatter::CURRENCY);
         return Attribute::make(
-            fn() => $formatter->formatCurrency($this->amount, $this->currency),
+            fn() => 'CHF ' . number_format($this->amount, 2, '.', ' '),
         );
     }
 

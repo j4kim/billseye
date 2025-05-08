@@ -70,7 +70,7 @@
                             <th>Description</th>
                             <th>Quantité</th>
                             <th>Taux</th>
-                            <th>Montant</th>
+                            <th style="text-align:right">Montant</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -79,7 +79,7 @@
                                 <td>{{ $item->description }}</td>
                                 <td>{{ $item->quantity }}</td>
                                 <td>{{ $item->unit_price }}</td>
-                                <td>{{ $item->total }}</td>
+                                <td style="text-align:right">{{ $item->formattedTotal }}</td>
                             </tr>
                         @endforeach
                     </tbody>

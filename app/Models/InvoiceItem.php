@@ -38,4 +38,11 @@ class InvoiceItem extends Model
             fn() => $this->unit_price * $this->quantity
         );
     }
+
+    protected function formattedTotal(): Attribute
+    {
+        return Attribute::make(
+            fn() => number_format($this->total, 2, '.', ' '),
+        );
+    }
 }
