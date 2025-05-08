@@ -32,7 +32,7 @@
     position: relative;
 }
 .invoice-preview .page-wrapper .page .content .footer p {
-    margin-bottom: 0.5em;
+    margin-bottom: 0.4em;
 }
 .page.sm {
     font-size: 9pt;
@@ -42,6 +42,9 @@
 }
 .page.sm .table tbody tr td {
     padding: 0.5em;
+}
+.invoice-preview .page-wrapper .page.sm .content .footer p {
+    margin-bottom: 0.2em;
 }
 </style>
 
@@ -78,7 +81,7 @@
                     <h4>Facture</h4>
                     <div>{{ $invoice->subject }}</div>
                     <div>
-                        Date: {{ $invoice->date->format('d.m.Y') }}
+                        Date de la facture : {{ $invoice->date->format('d.m.Y') }}
                     </div>
                 </div>
                 @if($invoice->invoiceItems->count())
