@@ -83,7 +83,8 @@ class InvoiceEditScreen extends Screen
                 Group::make([
                     Relation::make('invoice.account_id')
                         ->title('Creditor')
-                        ->fromModel(Account::class, 'name'),
+                        ->fromModel(Account::class, 'name')
+                        ->required(),
 
                     Relation::make('invoice.customer_id')
                         ->title('Debtor')
@@ -93,11 +94,13 @@ class InvoiceEditScreen extends Screen
                 Group::make([
                     DateTimer::make('invoice.date')
                         ->title('Date')
-                        ->format('Y-m-d'),
+                        ->format('Y-m-d')
+                        ->required(),
 
                     Input::make('invoice.subject')
                         ->title('Subject')
-                        ->help('What is the invoice about?'),
+                        ->help('What is the invoice about?')
+                        ->required(),
                 ]),
 
                 Group::make([
@@ -129,6 +132,7 @@ class InvoiceEditScreen extends Screen
             ]),
 
             Layout::view('invoice.preview')
+                ->canSee($this->invoice->exists)
         ];
     }
 
