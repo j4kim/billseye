@@ -141,9 +141,9 @@ class InvoiceEditScreen extends Screen
     {
         $this->invoice->fill($request->get('invoice'))->save();
 
-        Alert::info('You have successfully created an invoice.');
+        Alert::info($this->invoice->wasRecentlyCreated ? 'You have successfully created an invoice.' : 'Invoice updated');
 
-        return redirect()->route('platform.invoice.list');
+        return redirect()->route('platform.invoice.edit', $this->invoice);
     }
 
     /**
