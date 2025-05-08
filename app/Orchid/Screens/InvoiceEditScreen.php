@@ -88,18 +88,10 @@ class InvoiceEditScreen extends Screen
     public function layout(): iterable
     {
         return [
-            Layout::modal('addInvoiceItemModal', [
-                Layout::rows([
-                    Input::make('description')->title('Description')->required(),
-                    Input::make('quantity')->title('Quantity')->type('number')->value(1),
-                    Input::make('unit_price')->title('Unit price'),
-                ]),
-            ])->title('Add invoice item')->applyButton('Save'),
-
             Layout::modal('editInvoiceItemModal', [
                 Layout::rows([
                     Input::make('invoiceItem.description')->title('Description')->required(),
-                    Input::make('invoiceItem.quantity')->title('Quantity')->type('number'),
+                    Input::make('invoiceItem.quantity')->title('Quantity')->type('number')->value(1),
                     Input::make('invoiceItem.unit_price')->title('Unit price'),
                 ]),
             ])->title('Edit invoice item')->applyButton('Save')->deferred('loadInvoiceItemModal'),
@@ -193,7 +185,8 @@ class InvoiceEditScreen extends Screen
 
                     Layout::rows([
                         ModalToggle::make('Add item')
-                            ->modal('addInvoiceItemModal')
+                            ->modal('editInvoiceItemModal')
+                            ->modalTitle('Add Invoice item')
                             ->method('addInvoiceItem')
                             ->icon('plus'),
                     ]),
@@ -243,7 +236,7 @@ class InvoiceEditScreen extends Screen
     {
         $last = $this->invoice->invoiceItems()->orderBy('order', 'desc')->first();
         $this->invoice->invoiceItems()->create([
-            ...$request->all(),
+            ...$request->invoiceItem,
             'order' => ($last?->order ?? -1) + 1
         ]);
     }
