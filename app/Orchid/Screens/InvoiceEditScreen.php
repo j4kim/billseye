@@ -7,14 +7,15 @@ use App\Models\Customer;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\DateTimer;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Quill;
 use Orchid\Screen\Fields\Relation;
 use Orchid\Screen\Fields\Select;
-use Orchid\Screen\Fields\TextArea;
 use Orchid\Screen\Screen;
+use Orchid\Screen\TD;
 use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
 
@@ -132,7 +133,29 @@ class InvoiceEditScreen extends Screen
                         ]),
                 ]),
 
-                'Invoice items' => Layout::table('invoice.invoiceItems', []),
+                'Invoice items' => [
+                    Layout::modal('addInvoiceItemModal', [
+                        Layout::rows([
+                            Input::make('description')->title('Description'),
+                            Input::make('quantity')->title('Quantity')->type('number')->value(1),
+                            Input::make('unit_price')->title('Unit price'),
+                        ]),
+                    ])->title('Add invoice item')->applyButton('Save'),
+
+                    Layout::rows([
+                        ModalToggle::make('Add item')
+                            ->modal('addInvoiceItemModal')
+                            ->method('addInvoiceItem')
+                            ->icon('plus'),
+                    ]),
+
+                    Layout::table('invoice.invoiceItems', [
+                        TD::make('description'),
+                        TD::make('quantity'),
+                        TD::make('unit_price', 'Unit price'),
+                        TD::make('total'),
+                    ])
+                ],
 
                 'Preview invoice' => Layout::view('invoice.preview')
                     ->canSee($this->invoice->exists),
@@ -165,5 +188,10 @@ class InvoiceEditScreen extends Screen
         Alert::info('You have successfully deleted the invoice.');
 
         return redirect()->route('platform.invoice.list');
+    }
+
+    public function addInvoiceItem(Request $request): void
+    {
+        $this->invoice->invoiceItems()->create($request->all());
     }
 }
