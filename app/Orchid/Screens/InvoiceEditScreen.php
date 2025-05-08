@@ -161,13 +161,6 @@ class InvoiceEditScreen extends Screen
                         ]),
                     ])->title('Add invoice item')->applyButton('Save'),
 
-                    Layout::rows([
-                        ModalToggle::make('Add item')
-                            ->modal('addInvoiceItemModal')
-                            ->method('addInvoiceItem')
-                            ->icon('plus'),
-                    ]),
-
                     Layout::table('invoice.orderedInvoiceItems', [
                         TD::make('description'),
                         TD::make('quantity'),
@@ -185,7 +178,14 @@ class InvoiceEditScreen extends Screen
                                         Button::make('Remove')->icon('trash')->method('removeInvoiceItem', ['itemId' => $ii->id]),
                                     ]);
                             }),
-                    ])
+                    ]),
+
+                    Layout::rows([
+                        ModalToggle::make('Add item')
+                            ->modal('addInvoiceItemModal')
+                            ->method('addInvoiceItem')
+                            ->icon('plus'),
+                    ]),
                 ],
 
                 'Preview invoice' => Layout::view('invoice.preview')
