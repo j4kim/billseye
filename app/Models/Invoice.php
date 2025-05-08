@@ -47,14 +47,14 @@ class Invoice extends Model
                 'city' => $this->account->city,
                 'country' => $this->account->country,
             ],
-            'debtor' => [
+            'debtor' => $this->customer ? [
                 'name' => $this->customer->name,
                 'street' => $this->customer->street,
                 'buildingNumber' => $this->customer->building_number,
                 'postalCode' => $this->customer->postal_code,
                 'city' => $this->customer->city,
                 'country' => $this->customer->country,
-            ],
+            ] : [],
             'iban' => $this->account->iban,
             'currency' => $this->currency,
             'amount' => $this->amount,
