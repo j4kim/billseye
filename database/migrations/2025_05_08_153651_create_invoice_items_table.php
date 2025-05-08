@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('description');
             $table->integer('quantity')->nullable();
             $table->decimal('unit_price', total: 8, places: 2)->nullable();
+            $table->float('order');
         });
     }
 

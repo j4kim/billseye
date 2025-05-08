@@ -8,6 +8,7 @@ use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Actions\DropDown;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\DateTimer;
@@ -151,17 +152,21 @@ class InvoiceEditScreen extends Screen
                             ->icon('plus'),
                     ]),
 
-                    Layout::table('invoice.invoiceItems', [
+                    Layout::table('invoice.orderedInvoiceItems', [
                         TD::make('description'),
                         TD::make('quantity'),
                         TD::make('unit_price', 'Unit price'),
                         TD::make('total'),
                         TD::make('Actions')
                             ->alignRight()
-                            ->render(function (InvoiceItem $ii) {
-                                return Link::make("Edit")
-                                    ->icon('pencil')
-                                    ->route('platform.invoice-item', [$ii->invoice_id, $ii->id]);
+                            ->render(function (InvoiceItem $ii, $loop) {
+                                return DropDown::make()
+                                    ->icon('bs.three-dots-vertical')
+                                    ->list([
+                                        Button::make('Up')->icon('arrow-up')->method('moveInvoiceItem', ['itemId' => $ii->id, 'direction' => 'up'])->canSee(!$loop->first),
+                                        Button::make('Down')->icon('arrow-down')->method('moveInvoiceItem', ['itemId' => $ii->id, 'direction' => 'down'])->canSee(!$loop->last),
+                                        Link::make('Edit')->icon('pencil')->route('platform.invoice-item', [$ii->invoice_id, $ii->id]),
+                                    ]);
                             }),
                     ])
                 ],
@@ -201,6 +206,36 @@ class InvoiceEditScreen extends Screen
 
     public function addInvoiceItem(Request $request): void
     {
-        $this->invoice->invoiceItems()->create($request->all());
+        $last = $this->invoice->invoiceItems()->orderBy('order', 'desc')->first();
+        $this->invoice->invoiceItems()->create([
+            ...$request->all(),
+            'order' => ($last?->order ?? 0) + 128
+        ]);
+    }
+
+    public function moveInvoiceItem(Request $request)
+    {
+        $items = $this->invoice->invoiceItems;
+        $item = $items->find($request->itemId);
+
+        $op = $request->direction === 'up' ? '<=' : '>=';
+        $dir = $request->direction === 'up' ? 'desc' : 'asc';
+        $inc = $request->direction === 'up' ? -128 : 128;
+
+        $others = $items->where('order', $op, $item->order)
+            ->where('id', '!=', $item->id)
+            ->sortBy(['order', $dir])
+            ->values();
+
+        if ($others->count() === 0) {
+            return;
+        } else if ($others->count() === 1) {
+            $neworder = $others->get(0)->order + $inc;
+        } else {
+            $neworder = ($others->get(0)->order + $others->get(1)->order) / 2;
+        }
+
+        $item->order = $neworder;
+        $item->save();
     }
 }
