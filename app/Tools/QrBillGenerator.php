@@ -29,7 +29,7 @@ class QrBillGenerator
             )
         );
 
-        if ($data['debtor']['name']) {
+        if (@$data['debtor']['name']) {
             $qrBill->setUltimateDebtor(
                 StructuredAddress::createWithStreet(
                     ...$data['debtor']
