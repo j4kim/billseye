@@ -47,7 +47,7 @@ class InvoiceEditScreen extends Screen
      */
     public function name(): ?string
     {
-        return $this->invoice->exists ? 'Edit invoice' : 'Creating a new invoice';
+        return $this->invoice->exists ? "Edit invoice #{$this->invoice->id}" : 'Creating a new invoice';
     }
 
     /**
@@ -63,7 +63,12 @@ class InvoiceEditScreen extends Screen
                 ->method('createOrUpdate')
                 ->canSee(!$this->invoice->exists),
 
-            Button::make('Update Invoice')
+            Button::make('Duplicate')
+                ->icon('copy')
+                ->method('duplicate')
+                ->canSee($this->invoice->exists),
+
+            Button::make('Update')
                 ->icon('check-circle')
                 ->method('createOrUpdate')
                 ->canSee($this->invoice->exists),
@@ -248,5 +253,18 @@ class InvoiceEditScreen extends Screen
 
         $item->order = $neworder;
         $item->save();
+    }
+
+    public function duplicate(Request $request)
+    {
+        $newInvoice = $this->invoice->replicate()->fill([
+            'date' => now(),
+            'state' => 'Creating',
+        ]);
+        $newInvoice->save();
+        $newInvoice->invoiceItems()->createMany(
+            $this->invoice->invoiceItems()->select('description', 'quantity', 'order', 'unit_price')->get()->toArray()
+        );
+        return redirect()->route('platform.invoice.edit', $newInvoice);
     }
 }
