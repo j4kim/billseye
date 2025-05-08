@@ -172,8 +172,8 @@ class InvoiceEditScreen extends Screen
                                 return DropDown::make()
                                     ->icon('bs.three-dots-vertical')
                                     ->list([
-                                        Button::make('Up')->icon('arrow-up')->method('moveInvoiceItem', ['itemId' => $ii->id, 'direction' => 'up'])->canSee(!$loop->first),
-                                        Button::make('Down')->icon('arrow-down')->method('moveInvoiceItem', ['itemId' => $ii->id, 'direction' => 'down'])->canSee(!$loop->last),
+                                        Button::make('Up')->icon('arrow-up')->method('moveInvoiceItem', ['itemId' => $ii->id, 'swap' => $loop->index - 1])->canSee(!$loop->first),
+                                        Button::make('Down')->icon('arrow-down')->method('moveInvoiceItem', ['itemId' => $ii->id, 'swap' => $loop->index + 1])->canSee(!$loop->last),
                                         Link::make('Edit')->icon('pencil')->route('platform.invoice-item', [$ii->invoice_id, $ii->id]),
                                         Button::make('Remove')->icon('trash')->method('removeInvoiceItem', ['itemId' => $ii->id]),
                                     ]);
@@ -226,7 +226,7 @@ class InvoiceEditScreen extends Screen
         $last = $this->invoice->invoiceItems()->orderBy('order', 'desc')->first();
         $this->invoice->invoiceItems()->create([
             ...$request->all(),
-            'order' => ($last?->order ?? 0) + 128
+            'order' => ($last?->order ?? -1) + 1
         ]);
     }
 
@@ -240,26 +240,12 @@ class InvoiceEditScreen extends Screen
     {
         $items = $this->invoice->invoiceItems;
         $item = $items->find($request->itemId);
-
-        $op = $request->direction === 'up' ? '<=' : '>=';
-        $dir = $request->direction === 'up' ? 'desc' : 'asc';
-        $inc = $request->direction === 'up' ? -128 : 128;
-
-        $others = $items->where('order', $op, $item->order)
-            ->where('id', '!=', $item->id)
-            ->sortBy(['order', $dir])
-            ->values();
-
-        if ($others->count() === 0) {
-            return;
-        } else if ($others->count() === 1) {
-            $neworder = $others->get(0)->order + $inc;
-        } else {
-            $neworder = ($others->get(0)->order + $others->get(1)->order) / 2;
-        }
-
-        $item->order = $neworder;
+        $swapItem = $items->get($request->swap);
+        [$order, $swapOrder] = [$item->order, $swapItem->order];
+        $item->order = $swapOrder;
+        $swapItem->order = $order;
         $item->save();
+        $swapItem->save();
     }
 
     public function duplicate(Request $request)
