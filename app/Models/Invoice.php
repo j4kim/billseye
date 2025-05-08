@@ -65,6 +65,12 @@ class Invoice extends Model
         return $this->invoiceItems()->orderBy('order', 'asc');
     }
 
+    public function computeTotal()
+    {
+        $this->amount = $this->invoiceItems->pluck('total')->sum();
+        $this->save();
+    }
+
     public function generateQrBill(): string
     {
         return QrBillGenerator::generate([
