@@ -2,37 +2,43 @@
 
 namespace App\Tools;
 
-use Sprain\SwissQrBill as QrBill;
+use Sprain\SwissQrBill\DataGroup\Element\AdditionalInformation;
+use Sprain\SwissQrBill\DataGroup\Element\CreditorInformation;
+use Sprain\SwissQrBill\DataGroup\Element\PaymentAmountInformation;
+use Sprain\SwissQrBill\DataGroup\Element\PaymentReference;
+use Sprain\SwissQrBill\DataGroup\Element\StructuredAddress;
 use Sprain\SwissQrBill\PaymentPart\Output\HtmlOutput\HtmlOutput;
+use Sprain\SwissQrBill\QrBill;
+use Sprain\SwissQrBill\Reference\RfCreditorReferenceGenerator;
 
 class QrBillGenerator
 {
     public static function generate(array $data)
     {
-        $qrBill = QrBill\QrBill::create();
+        $qrBill = QrBill::create();
 
         $qrBill->setCreditor(
-            QrBill\DataGroup\Element\StructuredAddress::createWithStreet(
+            StructuredAddress::createWithStreet(
                 ...$data['creditor']
             )
         );
 
         $qrBill->setCreditorInformation(
-            QrBill\DataGroup\Element\CreditorInformation::create(
+            CreditorInformation::create(
                 $data['iban']
             )
         );
 
         if ($data['debtor']['name']) {
             $qrBill->setUltimateDebtor(
-                QrBill\DataGroup\Element\StructuredAddress::createWithStreet(
+                StructuredAddress::createWithStreet(
                     ...$data['debtor']
                 )
             );
         }
 
         $qrBill->setPaymentAmountInformation(
-            QrBill\DataGroup\Element\PaymentAmountInformation::create(
+            PaymentAmountInformation::create(
                 $data['currency'],
                 $data['amount']
             )
@@ -40,22 +46,22 @@ class QrBillGenerator
 
         if ($data['reference']) {
             $qrBill->setPaymentReference(
-                QrBill\DataGroup\Element\PaymentReference::create(
-                    QrBill\DataGroup\Element\PaymentReference::TYPE_SCOR,
-                    QrBill\Reference\RfCreditorReferenceGenerator::generate($data['reference'])
+                PaymentReference::create(
+                    PaymentReference::TYPE_SCOR,
+                    RfCreditorReferenceGenerator::generate($data['reference'])
                 )
             );
         } else {
             $qrBill->setPaymentReference(
-                QrBill\DataGroup\Element\PaymentReference::create(
-                    QrBill\DataGroup\Element\PaymentReference::TYPE_NON
+                PaymentReference::create(
+                    PaymentReference::TYPE_NON
                 )
             );
         }
 
         if ($data['additional-information']) {
             $qrBill->setAdditionalInformation(
-                QrBill\DataGroup\Element\AdditionalInformation::create(
+                AdditionalInformation::create(
                     $data['additional-information']
                 )
             );
