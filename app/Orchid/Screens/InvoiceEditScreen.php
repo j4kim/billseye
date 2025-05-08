@@ -127,7 +127,7 @@ class InvoiceEditScreen extends Screen
                         ]),
                 ]),
 
-                'right column' => Layout::rows([]),
+                'right column' => Layout::view('invoice.preview'),
             ])
         ];
     }
