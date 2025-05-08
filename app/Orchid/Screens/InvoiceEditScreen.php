@@ -161,6 +161,14 @@ class InvoiceEditScreen extends Screen
                         ]),
                     ])->title('Add invoice item')->applyButton('Save'),
 
+                    Layout::modal('editInvoiceItemModal', [
+                        Layout::rows([
+                            Input::make('invoiceItem.description')->title('Description')->required(),
+                            Input::make('invoiceItem.quantity')->title('Quantity')->type('number'),
+                            Input::make('invoiceItem.unit_price')->title('Unit price'),
+                        ]),
+                    ])->title('Edit invoice item')->applyButton('Save')->deferred('loadInvoiceItemModal'),
+
                     Layout::table('invoice.orderedInvoiceItems', [
                         TD::make('description'),
                         TD::make('quantity'),
@@ -174,7 +182,9 @@ class InvoiceEditScreen extends Screen
                                     ->list([
                                         Button::make('Up')->icon('arrow-up')->method('moveInvoiceItem', ['itemId' => $ii->id, 'swap' => $loop->index - 1])->canSee(!$loop->first),
                                         Button::make('Down')->icon('arrow-down')->method('moveInvoiceItem', ['itemId' => $ii->id, 'swap' => $loop->index + 1])->canSee(!$loop->last),
-                                        Link::make('Edit')->icon('pencil')->route('platform.invoice-item', [$ii->invoice_id, $ii->id]),
+                                        ModalToggle::make('Edit')->icon('pencil')
+                                            ->modal('editInvoiceItemModal', ['invoiceItem' => $ii->id])
+                                            ->method('saveInvoiceItem'),
                                         Button::make('Remove')->icon('trash')->method('removeInvoiceItem', ['itemId' => $ii->id]),
                                     ]);
                             }),
@@ -192,6 +202,13 @@ class InvoiceEditScreen extends Screen
                     ->canSee($this->invoice->exists),
             ]),
 
+        ];
+    }
+
+    public function loadInvoiceItemModal(InvoiceItem $invoiceItem)
+    {
+        return [
+            'invoiceItem' => $invoiceItem
         ];
     }
 
@@ -228,6 +245,11 @@ class InvoiceEditScreen extends Screen
             ...$request->all(),
             'order' => ($last?->order ?? -1) + 1
         ]);
+    }
+
+    public function saveInvoiceItem(Request $request, InvoiceItem $invoiceItem)
+    {
+        $invoiceItem->fill($request->invoiceItem)->save();
     }
 
     public function removeInvoiceItem(Request $request)

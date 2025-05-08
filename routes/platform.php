@@ -126,9 +126,3 @@ Route::screen('invoice/{invoice}', InvoiceEditScreen::class)
     ->breadcrumbs(function (Trail $trail, $invoice) {
         return $trail->parent('platform.invoice.list')->push("Edit Invoice", route('platform.invoice.edit', $invoice));
     });
-
-Route::screen('invoice/{invoice}/item/{invoiceItem}', InvoiceItemScreen::class)
-    ->name('platform.invoice-item')
-    ->breadcrumbs(function (Trail $trail, $invoice) {
-        return $trail->parent('platform.invoice.edit', $invoice)->push("Invoice item");
-    });
