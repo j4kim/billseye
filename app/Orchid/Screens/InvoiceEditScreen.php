@@ -88,6 +88,22 @@ class InvoiceEditScreen extends Screen
     public function layout(): iterable
     {
         return [
+            Layout::modal('addInvoiceItemModal', [
+                Layout::rows([
+                    Input::make('description')->title('Description')->required(),
+                    Input::make('quantity')->title('Quantity')->type('number')->value(1),
+                    Input::make('unit_price')->title('Unit price'),
+                ]),
+            ])->title('Add invoice item')->applyButton('Save'),
+
+            Layout::modal('editInvoiceItemModal', [
+                Layout::rows([
+                    Input::make('invoiceItem.description')->title('Description')->required(),
+                    Input::make('invoiceItem.quantity')->title('Quantity')->type('number'),
+                    Input::make('invoiceItem.unit_price')->title('Unit price'),
+                ]),
+            ])->title('Edit invoice item')->applyButton('Save')->deferred('loadInvoiceItemModal'),
+
             Layout::tabs([
                 'Invoice information' => Layout::rows([
 
@@ -153,21 +169,6 @@ class InvoiceEditScreen extends Screen
                 ]),
 
                 'Invoice items' => [
-                    Layout::modal('addInvoiceItemModal', [
-                        Layout::rows([
-                            Input::make('description')->title('Description')->required(),
-                            Input::make('quantity')->title('Quantity')->type('number')->value(1),
-                            Input::make('unit_price')->title('Unit price'),
-                        ]),
-                    ])->title('Add invoice item')->applyButton('Save'),
-
-                    Layout::modal('editInvoiceItemModal', [
-                        Layout::rows([
-                            Input::make('invoiceItem.description')->title('Description')->required(),
-                            Input::make('invoiceItem.quantity')->title('Quantity')->type('number'),
-                            Input::make('invoiceItem.unit_price')->title('Unit price'),
-                        ]),
-                    ])->title('Edit invoice item')->applyButton('Save')->deferred('loadInvoiceItemModal'),
 
                     Layout::table('invoice.orderedInvoiceItems', [
                         TD::make('description'),
