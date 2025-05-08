@@ -254,7 +254,7 @@ class InvoiceEditScreen extends Screen
 
     public function moveInvoiceItem(Request $request)
     {
-        $items = $this->invoice->invoiceItems;
+        $items = $this->invoice->orderedInvoiceItems;
         $item = $items->find($request->itemId);
         $swapItem = $items->get($request->swap);
         [$order, $swapOrder] = [$item->order, $swapItem->order];
