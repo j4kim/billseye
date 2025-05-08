@@ -116,7 +116,8 @@ class InvoiceEditScreen extends Screen
                         Input::make('invoice.amount')
                             ->title('Amount')
                             ->type('number')
-                            ->help('The total amount of the invoice'),
+                            ->help('The total amount of the invoice')
+                            ->disabled($this->invoice ? $this->invoice->invoiceItems()->exists() : false),
 
                         Input::make('invoice.discount')
                             ->title('Discount')
