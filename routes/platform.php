@@ -129,4 +129,4 @@ Route::screen('invoice/{invoice}', InvoiceEditScreen::class)
 
 Route::get('invoice/{invoice}/preview', function (Invoice $invoice) {
     return view('invoice.preview', ['invoice' => $invoice]);
-});
+})->name('platform.invoice.preview');

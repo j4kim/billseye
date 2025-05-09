@@ -192,7 +192,7 @@ class InvoiceEditScreen extends Screen
                     ])->canSee($this->invoice->exists),
                 ],
 
-                'Preview invoice' => Layout::view('invoice.preview')
+                'Preview invoice' => Layout::view('invoice.iframe')
                     ->canSee($this->invoice->exists),
             ]),
 
