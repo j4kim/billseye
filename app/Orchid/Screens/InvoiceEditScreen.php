@@ -189,7 +189,7 @@ class InvoiceEditScreen extends Screen
                             ->modalTitle('Add Invoice item')
                             ->method('addInvoiceItem')
                             ->icon('plus'),
-                    ]),
+                    ])->canSee($this->invoice->exists),
                 ],
 
                 'Preview invoice' => Layout::view('invoice.preview')
