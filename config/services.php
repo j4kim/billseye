@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'doppio' => [
+        'auth_token' => env('DOPPIO_AUTH_TOKEN'),
+    ],
+
 ];

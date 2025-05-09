@@ -21,6 +21,10 @@ Navigate to http://localhost:6412/admin.
 
 Log in using `admin@billseye.ch` / `admin`.
 
+## Doppio
+
+Set `DOPPIO_AUTH_TOKEN` in `.env` for PDF generation.
+
 ## Links
 
 [Data model](https://excalidraw.com/#json=GYOVCN7I9WyWRmJ_kqBdO,DEosvJT1OpDZPIs8nFl6wg)

@@ -21,6 +21,7 @@ use App\Orchid\Screens\StateScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
+use App\Tools\PdfService;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 
@@ -130,3 +131,9 @@ Route::screen('invoice/{invoice}', InvoiceEditScreen::class)
 Route::get('invoice/{invoice}/preview', function (Invoice $invoice) {
     return view('invoice.preview', ['invoice' => $invoice]);
 })->name('platform.invoice.preview');
+
+Route::get('invoice/{invoice}/pdf', function (Invoice $invoice) {
+    $html = view('invoice.preview', ['invoice' => $invoice])->render();
+    $pdf = PdfService::createPdf($html);
+    return response($pdf)->header('Content-Type', 'application/pdf');
+})->name('platform.invoice.pdf');
