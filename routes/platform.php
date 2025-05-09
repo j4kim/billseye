@@ -130,3 +130,10 @@ Route::screen('invoice/{invoice}', InvoiceEditScreen::class)
 Route::get('invoice/{invoice}/preview', function (Invoice $invoice) {
     return view('invoice.preview', ['invoice' => $invoice]);
 });
+
+Route::get('invoice/{invoice}/pdf', function (Invoice $invoice) {
+    $html = view('invoice.preview', ['invoice' => $invoice])->render();
+    $mpdf = new \Mpdf\Mpdf();
+    $mpdf->WriteHTML($html);
+    $mpdf->Output();
+});
