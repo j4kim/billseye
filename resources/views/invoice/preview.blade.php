@@ -37,8 +37,8 @@
         }
 
         .page .content .block.right {
-            left: 50%;
-            width: 50%;
+            left: 11cm;
+            width: 8cm;
             position: relative;
         }
 
