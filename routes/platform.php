@@ -12,6 +12,11 @@ use App\Orchid\Screens\Examples\ExampleGridScreen;
 use App\Orchid\Screens\Examples\ExampleLayoutsScreen;
 use App\Orchid\Screens\Examples\ExampleScreen;
 use App\Orchid\Screens\Examples\ExampleTextEditorsScreen;
+use App\Orchid\Screens\Invoice\InvoiceCreateScreen;
+use App\Orchid\Screens\Invoice\InvoiceDataScreen;
+use App\Orchid\Screens\Invoice\InvoiceItemsScreen;
+use App\Orchid\Screens\Invoice\InvoicePdfScreen;
+use App\Orchid\Screens\Invoice\InvoicePreviewScreen;
 use App\Orchid\Screens\InvoiceEditScreen;
 use App\Orchid\Screens\InvoiceListScreen;
 use App\Orchid\Screens\PlatformScreen;
@@ -116,16 +121,34 @@ Route::screen('invoices', InvoiceListScreen::class)
         return $trail->parent('platform.index')->push('Invoices', route('platform.invoice.list'));
     });
 
-Route::screen('invoice/new', InvoiceEditScreen::class)
+Route::screen('invoice/new', InvoiceDataScreen::class)
     ->name('platform.invoice.new')
     ->breadcrumbs(function (Trail $trail) {
         return $trail->parent('platform.invoice.list')->push("New Invoice");
     });
 
-Route::screen('invoice/{invoice}', InvoiceEditScreen::class)
-    ->name('platform.invoice.edit')
-    ->breadcrumbs(function (Trail $trail, $invoice) {
-        return $trail->parent('platform.invoice.list')->push("Edit Invoice", route('platform.invoice.edit', $invoice));
+Route::screen('invoice/{invoice}/edit/data', InvoiceDataScreen::class)
+    ->name('platform.invoice.edit.data')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail->parent('platform.invoice.list')->push("Edit Invoice");
+    });
+
+Route::screen('invoice/{invoice}/edit/items', InvoiceItemsScreen::class)
+    ->name('platform.invoice.edit.items')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail->parent('platform.invoice.list')->push("Edit Invoice");
+    });
+
+Route::screen('invoice/{invoice}/edit/preview', InvoicePreviewScreen::class)
+    ->name('platform.invoice.edit.preview')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail->parent('platform.invoice.list')->push("Edit Invoice");
+    });
+
+Route::screen('invoice/{invoice}/edit/pdf', InvoicePdfScreen::class)
+    ->name('platform.invoice.edit.pdf')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail->parent('platform.invoice.list')->push("Edit Invoice");
     });
 
 Route::get('invoice/{invoice}/preview', function (Invoice $invoice) {

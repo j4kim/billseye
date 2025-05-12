@@ -49,7 +49,7 @@ class InvoiceListLayout extends Table
                 ->render(function (Invoice $invoice) {
                     return Link::make('Edit')
                         ->icon('pencil')
-                        ->route('platform.invoice.edit', $invoice);
+                        ->route('platform.invoice.edit.data', $invoice);
                 }),
         ];
     }
