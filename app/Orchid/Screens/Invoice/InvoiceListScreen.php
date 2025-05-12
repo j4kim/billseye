@@ -1,18 +1,14 @@
 <?php
 
-namespace App\Orchid\Screens;
+namespace App\Orchid\Screens\Invoice;
 
-use Illuminate\Http\Request;
-use Orchid\Screen\Actions\Button;
-use Orchid\Screen\Fields\Label;
+use App\Models\Invoice;
+use App\Orchid\Layouts\InvoiceListLayout;
+use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
-use Orchid\Support\Color;
-use Orchid\Support\Facades\Layout;
 
-class StateScreen extends Screen
+class InvoiceListScreen extends Screen
 {
-    public $clicks;
-
     /**
      * Fetch data to be displayed on the screen.
      *
@@ -21,7 +17,7 @@ class StateScreen extends Screen
     public function query(): iterable
     {
         return [
-            'clicks' => $this->clicks ?? 0,
+            'invoices' => Invoice::paginate(),
         ];
     }
 
@@ -32,7 +28,7 @@ class StateScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'State';
+        return 'Invoices';
     }
 
     /**
@@ -42,7 +38,11 @@ class StateScreen extends Screen
      */
     public function commandBar(): iterable
     {
-        return [];
+        return [
+            Link::make('Create Invoice')
+                ->icon('plus-circle')
+                ->route('platform.invoice.new')
+        ];
     }
 
     /**
@@ -53,18 +53,7 @@ class StateScreen extends Screen
     public function layout(): iterable
     {
         return [
-            Layout::rows([
-                Label::make('clicks')->title('Click Count:'),
-
-                Button::make('Increment Click')
-                    ->type(Color::DARK)
-                    ->method('increment'),
-            ]),
+            InvoiceListLayout::class
         ];
-    }
-
-    public function increment(Request $request)
-    {
-        $this->clicks++;
     }
 }
