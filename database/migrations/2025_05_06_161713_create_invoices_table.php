@@ -26,6 +26,7 @@ return new class extends Migration
             $table->text('footer')->nullable();
             $table->string('state');
             $table->string('layout')->default('md');
+            $table->string('pdf_path')->nullable();
         });
     }
 
