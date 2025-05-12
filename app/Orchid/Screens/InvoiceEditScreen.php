@@ -63,14 +63,14 @@ class InvoiceEditScreen extends Screen
                 ->method('createOrUpdate')
                 ->canSee(!$this->invoice->exists),
 
-            Button::make('Duplicate')
-                ->icon('copy')
-                ->method('duplicate')
-                ->canSee($this->invoice->exists),
-
             Button::make('Update')
                 ->icon('check-circle')
                 ->method('createOrUpdate')
+                ->canSee($this->invoice->exists),
+
+            Button::make('Duplicate')
+                ->icon('copy')
+                ->method('duplicate')
                 ->canSee($this->invoice->exists),
 
             Button::make('Remove')
