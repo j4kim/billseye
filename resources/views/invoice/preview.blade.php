@@ -115,7 +115,7 @@
                                     <td>{{ $item->description }}</td>
                                     <td>{{ $item->quantity }}</td>
                                     <td>{{ $item->unit_price }}</td>
-                                    <td style="text-align:right">{{ $item->formattedTotal }}</td>
+                                    <td style="text-align:right; white-space: nowrap;">{{ $item->formattedTotal }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
