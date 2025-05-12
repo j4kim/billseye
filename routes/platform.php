@@ -19,7 +19,7 @@ use App\Orchid\Screens\Invoice\InvoicePdfScreen;
 use App\Orchid\Screens\Invoice\InvoicePreviewScreen;
 use App\Orchid\Screens\InvoiceEditScreen;
 use App\Orchid\Screens\InvoiceListScreen;
-use App\Orchid\Screens\PlatformScreen;
+use App\Orchid\Screens\HomeScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\StateScreen;
@@ -42,7 +42,7 @@ use Tabuna\Breadcrumbs\Trail;
 */
 
 // Main
-Route::screen('/main', PlatformScreen::class)
+Route::screen('/main', HomeScreen::class)
     ->name('platform.main');
 
 // Platform > Profile

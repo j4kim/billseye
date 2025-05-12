@@ -8,7 +8,7 @@ use App\Models\Invoice;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
 
-class PlatformScreen extends Screen
+class HomeScreen extends Screen
 {
     /**
      * Fetch data to be displayed on the screen.
