@@ -6,10 +6,11 @@ use App\Models\Account;
 use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\InvoiceItem;
+use App\Tools\PdfService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\DropDown;
-use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Fields\DateTimer;
 use Orchid\Screen\Fields\Group;
@@ -194,6 +195,15 @@ class InvoiceEditScreen extends Screen
 
                 'Preview invoice' => Layout::view('invoice.iframe')
                     ->canSee($this->invoice->exists),
+
+                'PDF' => [
+                    Layout::rows([
+                        Button::make('Generate PDF')->method('generatePDF'),
+                    ])->canSee($this->invoice->exists),
+
+                    Layout::view('invoice.pdf-iframe')
+                        ->canSee(!!$this->invoice->pdf_path),
+                ],
             ]),
 
         ];
@@ -275,5 +285,18 @@ class InvoiceEditScreen extends Screen
             $this->invoice->invoiceItems()->select('description', 'quantity', 'order', 'unit_price')->get()->toArray()
         );
         return redirect()->route('platform.invoice.edit', $newInvoice);
+    }
+
+    public function generatePDF()
+    {
+        $html = view('invoice.preview', ['invoice' => $this->invoice])->render();
+        $pdf = PdfService::createPdf($html);
+        $path = "{$this->invoice->id}.pdf";
+        if (Storage::put($path, $pdf)) {
+            $this->invoice->pdf_path = $path;
+            $this->invoice->save();
+        } else {
+            abort(500, "Unable to store PDF file");
+        }
     }
 }
