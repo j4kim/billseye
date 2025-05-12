@@ -11,6 +11,19 @@ use Orchid\Support\Facades\Layout;
 class InvoicePdfScreen extends InvoiceBaseScreen
 {
     /**
+     * The screen's action buttons.
+     *
+     * @return \Orchid\Screen\Action[]
+     */
+    public function commandBar(): iterable
+    {
+        return [
+            Button::make('Generate PDF')->icon('magic')->method('generatePDF'),
+            ...parent::commandBar(),
+        ];
+    }
+
+    /**
      * The screen's layout elements.
      *
      * @return \Orchid\Screen\Layout[]|string[]
@@ -19,10 +32,6 @@ class InvoicePdfScreen extends InvoiceBaseScreen
     {
         return [
             InvoiceTabMenu::class,
-
-            Layout::rows([
-                Button::make('Generate PDF')->method('generatePDF'),
-            ]),
 
             Layout::view('invoice.pdf-iframe')
                 ->canSee(!!$this->invoice->pdf_path),

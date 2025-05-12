@@ -43,12 +43,12 @@ class InvoiceBaseScreen extends Screen
     public function commandBar(): iterable
     {
         return [
-            Button::make('Duplicate')
+            Button::make('Duplicate invoice')
                 ->icon('copy')
                 ->method('duplicate')
                 ->canSee($this->invoice->exists),
 
-            Button::make('Remove')
+            Button::make('Delete invoice')
                 ->icon('trash')
                 ->method('remove')
                 ->canSee($this->invoice->exists),

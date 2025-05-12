@@ -15,6 +15,24 @@ use Orchid\Support\Facades\Layout;
 class InvoiceItemsScreen extends InvoiceBaseScreen
 {
     /**
+     * The screen's action buttons.
+     *
+     * @return \Orchid\Screen\Action[]
+     */
+    public function commandBar(): iterable
+    {
+        return [
+            ModalToggle::make('Add item')
+                ->modal('editInvoiceItemModal')
+                ->modalTitle('Add Invoice item')
+                ->method('addInvoiceItem')
+                ->icon('plus'),
+
+            ...parent::commandBar(),
+        ];
+    }
+
+    /**
      * The screen's layout elements.
      *
      * @return \Orchid\Screen\Layout[]|string[]
@@ -55,14 +73,6 @@ class InvoiceItemsScreen extends InvoiceBaseScreen
                                     ->method('removeInvoiceItem', ['itemId' => $ii->id]),
                             ]);
                     }),
-            ]),
-
-            Layout::rows([
-                ModalToggle::make('Add item')
-                    ->modal('editInvoiceItemModal')
-                    ->modalTitle('Add Invoice item')
-                    ->method('addInvoiceItem')
-                    ->icon('plus'),
             ]),
 
             Layout::modal('editInvoiceItemModal', [
