@@ -98,7 +98,7 @@
                     Date de la facture : {{ $invoice->date->format('d.m.Y') }}
                 </div>
             </div>
-            @if ($invoice->invoiceItems->count())
+            @if ($invoice->orderedInvoiceItems->count())
                 <div class="block">
                     <table class="table">
                         <thead>
@@ -110,7 +110,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($invoice->invoiceItems as $item)
+                            @foreach ($invoice->orderedInvoiceItems as $item)
                                 <tr>
                                     <td>{{ $item->description }}</td>
                                     <td>{{ $item->quantity }}</td>
