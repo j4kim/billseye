@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Orchid\Screens;
 
+use App\Models\Invoice;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Layout;
 
@@ -16,7 +17,15 @@ class PlatformScreen extends Screen
      */
     public function query(): iterable
     {
-        return [];
+        return [
+            'metrics' => [
+                'invoices' => ['value' => Invoice::count()],
+                'Creating' => ['value' => Invoice::where('state', 'Creating')->count()],
+                'Ready' => ['value' => Invoice::where('state', 'Ready')->count()],
+                'Sent' => ['value' => Invoice::where('state', 'Sent')->count()],
+                'Paid' => ['value' => Invoice::where('state', 'Paid')->count()],
+            ],
+        ];
     }
 
     /**
@@ -24,15 +33,7 @@ class PlatformScreen extends Screen
      */
     public function name(): ?string
     {
-        return 'Get Started';
-    }
-
-    /**
-     * Display header description.
-     */
-    public function description(): ?string
-    {
-        return 'Welcome to your Orchid application.';
+        return 'Home';
     }
 
     /**
@@ -53,8 +54,13 @@ class PlatformScreen extends Screen
     public function layout(): iterable
     {
         return [
-            Layout::view('platform::partials.update-assets'),
-            Layout::view('platform::partials.welcome'),
+            Layout::metrics([
+                'Total Invoices' => 'metrics.invoices',
+                'Creating' => 'metrics.Creating',
+                'Ready' => 'metrics.Ready',
+                'Sent' => 'metrics.Sent',
+                'Paid' => 'metrics.Paid',
+            ]),
         ];
     }
 }
