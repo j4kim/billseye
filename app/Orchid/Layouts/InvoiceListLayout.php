@@ -39,7 +39,7 @@ class InvoiceListLayout extends Table
             TD::make('subject', 'Subject'),
 
             TD::make('amount', 'Amount')->render(function (Invoice $invoice) {
-                return $invoice->amount . ' ' . $invoice->currency;
+                return '<span style="white-space:nowrap">' . $invoice->amount . ' ' . $invoice->currency . '</span>';
             }),
 
             TD::make('state', 'State')->component(StateBadge::class),
