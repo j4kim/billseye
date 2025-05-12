@@ -51,7 +51,8 @@ class InvoiceBaseScreen extends Screen
             Button::make('Delete invoice')
                 ->icon('trash')
                 ->method('remove')
-                ->canSee($this->invoice->exists),
+                ->canSee($this->invoice->exists)
+                ->confirm('After deleting, the invoice will be gone forever.'),
         ];
     }
 
