@@ -3,8 +3,8 @@
 namespace App\Orchid\Layouts;
 
 use App\Models\Invoice;
-use App\View\Components\StateBadge;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
@@ -42,7 +42,22 @@ class InvoiceListLayout extends Table
                 return '<span style="white-space:nowrap">' . $invoice->amount . ' ' . $invoice->currency . '</span>';
             }),
 
-            TD::make('state', 'State')->component(StateBadge::class),
+            TD::make('state', 'State')
+                ->render(
+                    fn(Invoice $invoice) => ModalToggle::make($invoice->state)
+                        ->modal('setStateModal')
+                        ->modalTitle($invoice->id)
+                        ->method('updateState')
+                        ->asyncParameters([
+                            'invoice' => $invoice->id,
+                        ])
+                        ->addClass(match ($invoice->state) {
+                            'Creating' => 'bg-secondary text-white',
+                            'Ready' => 'bg-warning text-white',
+                            'Sent' => 'bg-primary text-white',
+                            'Paid' => 'bg-success text-white',
+                        })
+                ),
 
             TD::make('Actions')
                 ->alignRight()
