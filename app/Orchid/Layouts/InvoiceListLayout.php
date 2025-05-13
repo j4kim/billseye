@@ -46,16 +46,17 @@ class InvoiceListLayout extends Table
                 ->render(
                     fn(Invoice $invoice) => ModalToggle::make($invoice->state)
                         ->modal('setStateModal')
-                        ->modalTitle($invoice->id)
+                        ->modalTitle("Set state for invoice $invoice->id")
                         ->method('updateState')
                         ->asyncParameters([
                             'invoice' => $invoice->id,
                         ])
+                        ->addClass('rounded-pill text-white')
                         ->addClass(match ($invoice->state) {
-                            'Creating' => 'bg-secondary text-white',
-                            'Ready' => 'bg-warning text-white',
-                            'Sent' => 'bg-primary text-white',
-                            'Paid' => 'bg-success text-white',
+                            'Creating' => 'bg-secondary',
+                            'Ready' => 'bg-warning',
+                            'Sent' => 'bg-primary',
+                            'Paid' => 'bg-success',
                         })
                 ),
 

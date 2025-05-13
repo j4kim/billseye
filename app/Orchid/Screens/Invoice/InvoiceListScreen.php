@@ -4,8 +4,11 @@ namespace App\Orchid\Screens\Invoice;
 
 use App\Models\Invoice;
 use App\Orchid\Layouts\InvoiceListLayout;
+use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Fields\RadioButtons;
 use Orchid\Screen\Screen;
+use Orchid\Support\Facades\Layout;
 
 class InvoiceListScreen extends Screen
 {
@@ -53,7 +56,31 @@ class InvoiceListScreen extends Screen
     public function layout(): iterable
     {
         return [
+            Layout::modal('setStateModal', Layout::rows([
+                RadioButtons::make('state')
+                    ->title('State')
+                    ->options([
+                        'Creating' => 'Creating',
+                        'Ready' => 'Ready',
+                        'Sent' => 'Sent',
+                        'Paid' => 'Paid'
+                    ]),
+            ]))
+                ->deferred('loadInvoiceOnOpenModal'),
+
             InvoiceListLayout::class
         ];
+    }
+    public function loadInvoiceOnOpenModal(Invoice $invoice): iterable
+    {
+        return [
+            'state' => $invoice->state,
+        ];
+    }
+
+    public function updateState(Request $request, Invoice $invoice)
+    {
+        $invoice->state = $request->state;
+        $invoice->save();
     }
 }
