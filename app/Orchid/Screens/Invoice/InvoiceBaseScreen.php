@@ -84,7 +84,7 @@ class InvoiceBaseScreen extends Screen
      */
     public function duplicate(Request $request)
     {
-        $newInvoice = $this->invoice->replicate()->fill([
+        $newInvoice = $this->invoice->replicate(['pdf_path'])->fill([
             'date' => now(),
             'state' => 'Creating',
         ]);
