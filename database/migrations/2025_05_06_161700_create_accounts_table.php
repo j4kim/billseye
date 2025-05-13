@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('email')->nullable();
-            $table->json('smtp_config')->nullable();
+            $table->text('smtp_config')->nullable();
             $table->string('iban');
             $table->string('name');
             $table->string('street');
