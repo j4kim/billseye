@@ -46,7 +46,9 @@ class InvoiceItemsScreen extends InvoiceBaseScreen
                 TD::make('description'),
                 TD::make('quantity'),
                 TD::make('unit_price', 'Unit price'),
-                TD::make('total'),
+                TD::make('total')->render(function (InvoiceItem $ii) {
+                    return '<span style="white-space:nowrap">' . $ii->total . '</span>';
+                }),
                 TD::make('Actions')
                     ->alignRight()
                     ->render(function (InvoiceItem $ii, $loop) {
