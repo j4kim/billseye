@@ -71,6 +71,7 @@ class InvoiceBaseScreen extends Screen
      */
     public function remove()
     {
+        $this->invoice->invoiceItems()->delete();
         $this->invoice->delete();
 
         Alert::info('You have successfully deleted the invoice.');
