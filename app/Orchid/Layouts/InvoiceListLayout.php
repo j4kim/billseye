@@ -7,6 +7,7 @@ use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Actions\ModalToggle;
 use Orchid\Screen\Components\Cells\Currency;
 use Orchid\Screen\Components\Cells\DateTime;
+use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
@@ -40,7 +41,8 @@ class InvoiceListLayout extends Table
                 return $invoice->customer?->name;
             }),
 
-            TD::make('subject', 'Subject'),
+            TD::make('subject', 'Subject')
+                ->filter(Input::make()),
 
             TD::make('amount', 'Amount')
                 ->usingComponent(Currency::class, before: 'CHF', thousands_separator: ' ')

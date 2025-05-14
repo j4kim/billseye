@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 use Orchid\Filters\Filterable;
+use Orchid\Filters\Types\Like;
 use Orchid\Screen\AsSource;
 
 class Invoice extends Model
@@ -30,6 +31,15 @@ class Invoice extends Model
         'date',
         'amount',
         'state',
+    ];
+
+    /**
+     * Name of columns to which http filter can be applied
+     *
+     * @var array
+     */
+    protected $allowedFilters = [
+        'subject' => Like::class,
     ];
 
     protected function casts(): array
