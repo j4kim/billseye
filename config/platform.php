@@ -127,7 +127,7 @@ return [
 
     'resource' => [
         'stylesheets' => [
-            'app.css'
+            env('APP_URL', '/') . 'app.css'
         ],
         'scripts'     => [],
     ],
