@@ -127,7 +127,7 @@ return [
 
     'resource' => [
         'stylesheets' => [
-            'app.css'
+            asset('app.css')
         ],
         'scripts'     => [],
     ],
