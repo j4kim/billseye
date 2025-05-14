@@ -8,16 +8,29 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
+use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
 
 class Invoice extends Model
 {
-    use AsSource;
+    use AsSource, Filterable;
 
     /**
      * @var array
      */
     protected $guarded = [];
+
+    /**
+     * Name of columns to which http sorting can be applied
+     *
+     * @var array
+     */
+    protected $allowedSorts = [
+        'id',
+        'date',
+        'amount',
+        'state',
+    ];
 
     protected function casts(): array
     {

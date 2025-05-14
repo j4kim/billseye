@@ -30,10 +30,11 @@ class InvoiceListLayout extends Table
     protected function columns(): iterable
     {
         return [
-            TD::make('id', 'ID'),
+            TD::make('id', 'ID')->sort(),
 
             TD::make('date', 'Date')
-                ->usingComponent(DateTime::class, format: 'd.m.Y'),
+                ->usingComponent(DateTime::class, format: 'd.m.Y')
+                ->sort(),
 
             TD::make('customer', 'Customer')->render(function (Invoice $invoice) {
                 return $invoice->customer?->name;
@@ -42,7 +43,8 @@ class InvoiceListLayout extends Table
             TD::make('subject', 'Subject'),
 
             TD::make('amount', 'Amount')
-                ->usingComponent(Currency::class, before: 'CHF', thousands_separator: ' '),
+                ->usingComponent(Currency::class, before: 'CHF', thousands_separator: ' ')
+                ->sort(),
 
             TD::make('state', 'State')
                 ->render(
@@ -60,7 +62,8 @@ class InvoiceListLayout extends Table
                             'Sent' => 'bg-primary',
                             'Paid' => 'bg-success',
                         })
-                ),
+                )
+                ->sort(),
 
             TD::make('Actions')
                 ->alignRight()

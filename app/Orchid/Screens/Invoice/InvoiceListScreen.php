@@ -20,7 +20,7 @@ class InvoiceListScreen extends Screen
     public function query(): iterable
     {
         return [
-            'invoices' => Invoice::paginate(),
+            'invoices' => Invoice::filters()->defaultSort('id')->paginate(),
         ];
     }
 
