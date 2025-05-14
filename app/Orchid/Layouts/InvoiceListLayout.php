@@ -37,9 +37,7 @@ class InvoiceListLayout extends Table
                 ->usingComponent(DateTime::class, format: 'd.m.Y')
                 ->sort(),
 
-            TD::make('customer', 'Customer')->render(function (Invoice $invoice) {
-                return $invoice->customer?->name;
-            }),
+            TD::make('customer.name', 'Customer'),
 
             TD::make('subject', 'Subject')
                 ->filter(Input::make()),
