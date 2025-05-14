@@ -1,0 +1,5 @@
+.page-platform-invoice-list td[data-column=date],
+.page-platform-invoice-list td[data-column=amount]
+{
+    white-space: nowrap;
+}

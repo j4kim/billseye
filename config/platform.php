@@ -126,7 +126,9 @@ return [
      */
 
     'resource' => [
-        'stylesheets' => [],
+        'stylesheets' => [
+            'app.css'
+        ],
         'scripts'     => [],
     ],
 
