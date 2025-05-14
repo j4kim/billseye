@@ -5,6 +5,8 @@ namespace App\Orchid\Layouts;
 use App\Models\Invoice;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Actions\ModalToggle;
+use Orchid\Screen\Components\Cells\Currency;
+use Orchid\Screen\Components\Cells\DateTime;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
 
@@ -30,7 +32,8 @@ class InvoiceListLayout extends Table
         return [
             TD::make('id', 'ID'),
 
-            TD::make('date', 'Date'),
+            TD::make('date', 'Date')
+                ->usingComponent(DateTime::class, format: 'd.m.Y'),
 
             TD::make('customer', 'Customer')->render(function (Invoice $invoice) {
                 return $invoice->customer?->name;
@@ -38,9 +41,8 @@ class InvoiceListLayout extends Table
 
             TD::make('subject', 'Subject'),
 
-            TD::make('amount', 'Amount')->render(function (Invoice $invoice) {
-                return '<span style="white-space:nowrap">' . $invoice->amount . ' ' . $invoice->currency . '</span>';
-            }),
+            TD::make('amount', 'Amount')
+                ->usingComponent(Currency::class, before: 'CHF', thousands_separator: ' '),
 
             TD::make('state', 'State')
                 ->render(
