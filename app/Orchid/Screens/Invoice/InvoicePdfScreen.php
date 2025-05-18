@@ -45,6 +45,7 @@ class InvoicePdfScreen extends InvoiceBaseScreen
         $path = "{$this->invoice->id}.pdf";
         if (Storage::put($path, $pdf)) {
             $this->invoice->pdf_path = $path;
+            $this->invoice->pdf_generated_at = now();
             $this->invoice->save();
         } else {
             abort(500, "Unable to store PDF file");
