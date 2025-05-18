@@ -9,6 +9,7 @@ use App\Orchid\Screens\Invoice\InvoicePdfScreen;
 use App\Orchid\Screens\Invoice\InvoicePreviewScreen;
 use App\Orchid\Screens\Invoice\InvoiceListScreen;
 use App\Orchid\Screens\HomeScreen;
+use App\Orchid\Screens\Invoice\InvoiceEmailScreen;
 use App\Orchid\Screens\Role\RoleEditScreen;
 use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
@@ -115,6 +116,12 @@ Route::screen('invoice/{invoice}/edit/preview', InvoicePreviewScreen::class)
 
 Route::screen('invoice/{invoice}/edit/pdf', InvoicePdfScreen::class)
     ->name('platform.invoice.edit.pdf')
+    ->breadcrumbs(function (Trail $trail) {
+        return $trail->parent('platform.invoice.list')->push("Edit Invoice");
+    });
+
+Route::screen('invoice/{invoice}/edit/email', InvoiceEmailScreen::class)
+    ->name('platform.invoice.edit.email')
     ->breadcrumbs(function (Trail $trail) {
         return $trail->parent('platform.invoice.list')->push("Edit Invoice");
     });

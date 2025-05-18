@@ -36,6 +36,9 @@ class InvoiceTabMenu extends TabMenu
 
             Menu::make('PDF')
                 ->route('platform.invoice.edit.pdf', $params),
+
+            Menu::make('Email')
+                ->route('platform.invoice.edit.email', $params),
         ];
     }
 }
