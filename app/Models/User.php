@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Notifications\Notifiable;
 use Orchid\Filters\Types\Like;
 use Orchid\Filters\Types\Where;
@@ -75,4 +76,9 @@ class User extends Authenticatable
         'updated_at',
         'created_at',
     ];
+
+    public function accounts(): BelongsToMany
+    {
+        return $this->belongsToMany(Account::class)->withPivot('selected')->withTimestamps();
+    }
 }

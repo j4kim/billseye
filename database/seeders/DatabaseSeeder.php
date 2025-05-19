@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Account;
 use App\Models\Customer;
+use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Artisan;
@@ -17,7 +18,9 @@ class DatabaseSeeder extends Seeder
     {
         Artisan::call('orchid:admin admin admin@billseye.ch admin');
 
-        Account::create([
+        $admin = User::firstWhere('name', 'admin');
+
+        $account = Account::create([
             'email' => 'contact@3sdl.ch',
             'smtp_config' => [
                 'host' => 'mail.infomaniak.com',
@@ -33,6 +36,10 @@ class DatabaseSeeder extends Seeder
             'country' => 'CH',
         ]);
 
-        Customer::factory()->count(10)->create();
+        $admin->accounts()->attach($account, ['selected' => true]);
+
+        Customer::factory()->count(5)->create([
+            'account_id' => $account->id,
+        ]);
     }
 }
