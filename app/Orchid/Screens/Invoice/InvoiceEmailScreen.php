@@ -91,7 +91,7 @@ class InvoiceEmailScreen extends InvoiceBaseScreen
 
         $smtp_config = $this->invoice->account->smtp_config;
 
-        foreach (['host', 'port', 'password'] as $key) {
+        foreach (['host', 'port', 'username', 'password'] as $key) {
             if (!$smtp_config[$key]) {
                 Alert::error("$key missing in SMTP config of the account");
                 return;
@@ -101,7 +101,6 @@ class InvoiceEmailScreen extends InvoiceBaseScreen
         config([
             'mail.mailers.smtp' => array_merge(
                 config('mail.mailers.smtp'),
-                ['username' => $this->invoice->account->email],
                 $smtp_config
             )
         ]);

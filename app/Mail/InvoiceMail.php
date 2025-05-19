@@ -29,7 +29,7 @@ class InvoiceMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address($this->invoice->account->email, $this->invoice->account->name),
+            from: new Address($this->invoice->account->smtp_config['username'], $this->invoice->account->name),
             subject: $this->invoice->email_subject,
         );
     }
