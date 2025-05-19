@@ -16,7 +16,7 @@ php artisan migrate --seed
 composer run dev
 ```
 
-Navigate to http://localhost:6412/admin.
+Navigate to http://localhost:6412/.
 
 Log in using `admin@billseye.ch` / `admin`.
 
