@@ -113,6 +113,10 @@ class InvoiceDataScreen extends InvoiceBaseScreen
                             'sm' => 'small',
                             'md' => 'medium',
                         ]),
+
+                    DateTimer::make('invoice.paid_at')
+                        ->title('Paid at')
+                        ->format('Y-m-d'),
                 ]),
 
             ])
