@@ -57,6 +57,17 @@ class Invoice extends Model
         );
     }
 
+    protected function pdfFilename(): Attribute
+    {
+        return Attribute::make(
+            fn() => $this->date->format('Y_m_d_')
+                . __('invoice') . '_' . $this->id . '_'
+                . Str::slug($this->account->name, '_') . '_'
+                . Str::slug($this->customer->name, '_')
+                . '.pdf'
+        );
+    }
+
     public function account(): BelongsTo
     {
         return $this->belongsTo(Account::class);
