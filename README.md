@@ -26,4 +26,4 @@ Set `DOPPIO_AUTH_TOKEN` in `.env` for PDF generation.
 
 ## Links
 
-[Data model](https://excalidraw.com/#json=tYUg0MC5Tl_PfWEJw8fM0,2phQXxSpIToew71RWJEy7A)
+[Data model](https://excalidraw.com/#json=5w4xcHQVsYui-TH08XDgj,vsY3RXcjTTr69bMCO8T1xw)
