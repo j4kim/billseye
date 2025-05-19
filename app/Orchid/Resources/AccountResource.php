@@ -43,8 +43,7 @@ class AccountResource extends Resource
             Input::make('iban')->title('IBAN')->required(),
             Group::make([
                 Input::make('smtp_config.host')->title('SMTP host'),
-                Input::make('smtp_config.port')->title('SMTP port'),
-                Input::make('smtp_config.username')->title('SMTP username'),
+                Input::make('smtp_config.port')->value(587)->title('SMTP port'),
                 Input::make('smtp_config.password')->title('SMTP password'),
             ]),
         ];

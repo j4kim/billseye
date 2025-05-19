@@ -79,7 +79,8 @@ class InvoiceEmailScreen extends InvoiceBaseScreen
         config([
             'mail.mailers.smtp' => array_merge(
                 config('mail.mailers.smtp'),
-                $this->invoice->account->smtp_config
+                ['username' => $this->invoice->account->email],
+                $smtp_config
             )
         ]);
 
