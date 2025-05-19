@@ -77,6 +77,8 @@ class InvoiceEmailScreen extends InvoiceBaseScreen
 
     public function send(Request $request)
     {
+        $this->invoice->fill($request->get('invoice'))->save();
+
         if (!$this->invoice->pdf_path || !Storage::exists($this->invoice->pdf_path)) {
             Alert::error("PDF missing");
             return;
@@ -86,8 +88,6 @@ class InvoiceEmailScreen extends InvoiceBaseScreen
             Alert::error("Customer has no email address");
             return;
         }
-
-        $this->invoice->fill($request->get('invoice'));
 
         $smtp_config = $this->invoice->account->smtp_config;
 
