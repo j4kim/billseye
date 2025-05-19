@@ -46,10 +46,20 @@ class InvoiceEmailScreen extends InvoiceBaseScreen
                     ->title('Email content'),
 
                 Group::make([
+                    Input::make('from')
+                        ->title('From')
+                        ->value($this->invoice->account->email)
+                        ->disabled(),
+                    Input::make('to')
+                        ->title('To')
+                        ->value($this->invoice->customer->email)
+                        ->disabled(),
+                ]),
+
+                Group::make([
                     Input::make('invoice.email_cc')->title('cc'),
                     Input::make('invoice.email_bcc')->title('bcc'),
                 ]),
-
             ]),
         ];
     }
