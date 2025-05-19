@@ -63,7 +63,7 @@ class InvoiceEmailScreen extends InvoiceBaseScreen
                         ->disabled(),
                     Input::make('to')
                         ->title('To')
-                        ->value($this->invoice->customer->email)
+                        ->value($this->invoice->customer?->email)
                         ->disabled(),
                 ]),
 
@@ -84,7 +84,7 @@ class InvoiceEmailScreen extends InvoiceBaseScreen
             return;
         }
 
-        if (!$this->invoice->customer->email) {
+        if (!$this->invoice->customer?->email) {
             Alert::error("Customer has no email address");
             return;
         }
