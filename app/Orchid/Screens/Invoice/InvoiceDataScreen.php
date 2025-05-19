@@ -68,6 +68,7 @@ class InvoiceDataScreen extends InvoiceBaseScreen
                     DateTimer::make('invoice.date')
                         ->title('Date')
                         ->format('Y-m-d')
+                        ->value(now())
                         ->required(),
 
                     Input::make('invoice.subject')
@@ -107,6 +108,7 @@ class InvoiceDataScreen extends InvoiceBaseScreen
 
                     RadioButtons::make('invoice.layout')
                         ->title('Layout')
+                        ->value('sm')
                         ->options([
                             'sm' => 'small',
                             'md' => 'medium',
