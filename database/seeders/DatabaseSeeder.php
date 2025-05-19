@@ -20,10 +20,10 @@ class DatabaseSeeder extends Seeder
         Account::create([
             'email' => 'contact@3sdl.ch',
             'smtp_config' => [
-                'smtp_host' => 'mail.infomaniak.com',
-                'smtp_port' => '587',
-                'smtp_username' => 'contact@3sdl.ch',
-                'smtp_password' => config('mail.mailers.smtp.password')
+                'host' => 'mail.infomaniak.com',
+                'port' => '587',
+                'username' => 'contact@3sdl.ch',
+                'password' => config('mail.mailers.smtp.password')
             ],
             'iban' => 'CH07 0900 0000 1257 3316 6',
             'name' => '3SDL',
