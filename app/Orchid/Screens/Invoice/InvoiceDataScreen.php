@@ -128,13 +128,4 @@ class InvoiceDataScreen extends InvoiceBaseScreen
         Alert::info('You have successfully created an invoice.');
         return redirect()->route('platform.invoice.edit.items', $this->invoice);
     }
-
-    /**
-     * @param \Illuminate\Http\Request $request
-     */
-    public function update(Request $request)
-    {
-        $this->invoice->fill($request->get('invoice'))->save();
-        Alert::info('Invoice updated');
-    }
 }

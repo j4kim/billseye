@@ -67,6 +67,15 @@ class InvoiceBaseScreen extends Screen
     }
 
     /**
+     * @param \Illuminate\Http\Request $request
+     */
+    public function update(Request $request)
+    {
+        $this->invoice->fill($request->get('invoice'))->save();
+        Alert::info('Invoice updated');
+    }
+
+    /**
      * @return \Illuminate\Http\RedirectResponse
      */
     public function remove()
