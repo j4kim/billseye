@@ -6,6 +6,7 @@ use App\Orchid\Layouts\InvoiceTabMenu;
 use App\Tools\PdfService;
 use Illuminate\Support\Facades\Storage;
 use Orchid\Screen\Actions\Button;
+use Orchid\Screen\Actions\Link;
 use Orchid\Support\Facades\Layout;
 
 class InvoicePdfScreen extends InvoiceBaseScreen
@@ -18,7 +19,16 @@ class InvoicePdfScreen extends InvoiceBaseScreen
     public function commandBar(): iterable
     {
         return [
-            Button::make('Generate PDF')->icon('magic')->method('generatePDF'),
+            Link::make('Download PDF')
+                ->icon('download')
+                ->target('_blank')
+                ->route('platform.invoice.pdf.download', $this->invoice->id)
+                ->canSee(!!$this->invoice->pdf_path),
+
+            Button::make('Generate PDF')
+                ->icon('magic')
+                ->method('generatePDF'),
+
             ...parent::commandBar(),
         ];
     }

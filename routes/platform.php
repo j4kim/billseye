@@ -137,3 +137,7 @@ Route::get('invoice/{invoice}/pdf', function (Invoice $invoice) {
     }
     return "No PDF generated for this invoice";
 })->name('platform.invoice.pdf');
+
+Route::get('invoice/{invoice}/pdf/download', function (Invoice $invoice) {
+    return Storage::download($invoice->pdf_path, $invoice->pdfFilename);
+})->name('platform.invoice.pdf.download');
