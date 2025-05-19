@@ -6,6 +6,7 @@ use App\Mail\InvoiceMail;
 use App\Orchid\Layouts\InvoiceTabMenu;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
@@ -48,10 +49,12 @@ class InvoiceEmailScreen extends InvoiceBaseScreen
             Layout::rows([
                 Input::make('invoice.email_subject')
                     ->title('Email Subject')
-                    ->value("Facture - " . $this->invoice->subject),
+                    ->value("Facture - " . $this->invoice->subject)
+                    ->required(),
 
                 Quill::make('invoice.email_content')
-                    ->title('Email content'),
+                    ->title('Email content')
+                    ->required(),
 
                 Group::make([
                     Input::make('from')
@@ -74,7 +77,26 @@ class InvoiceEmailScreen extends InvoiceBaseScreen
 
     public function send(Request $request)
     {
+        if (!$this->invoice->pdf_path || !Storage::exists($this->invoice->pdf_path)) {
+            Alert::error("PDF missing");
+            return;
+        }
+
+        if (!$this->invoice->customer->email) {
+            Alert::error("Customer has no email address");
+            return;
+        }
+
         $this->invoice->fill($request->get('invoice'));
+
+        $smtp_config = $this->invoice->account->smtp_config;
+
+        foreach (['host', 'port', 'password'] as $key) {
+            if (!$smtp_config[$key]) {
+                Alert::error("$key missing in SMTP config of the account");
+                return;
+            }
+        }
 
         config([
             'mail.mailers.smtp' => array_merge(
