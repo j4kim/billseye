@@ -2,11 +2,15 @@
 
 namespace App\Orchid\Screens\Invoice;
 
+use App\Mail\InvoiceMail;
 use App\Orchid\Layouts\InvoiceTabMenu;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Fields\Quill;
+use Orchid\Support\Facades\Alert;
 use Orchid\Support\Facades\Layout;
 
 class InvoiceEmailScreen extends InvoiceBaseScreen
@@ -19,6 +23,10 @@ class InvoiceEmailScreen extends InvoiceBaseScreen
     public function commandBar(): iterable
     {
         return [
+            Button::make('Send')
+                ->icon('send')
+                ->method('send'),
+
             Button::make('Update')
                 ->icon('check-circle')
                 ->method('update'),
@@ -62,5 +70,28 @@ class InvoiceEmailScreen extends InvoiceBaseScreen
                 ]),
             ]),
         ];
+    }
+
+    public function send(Request $request)
+    {
+        $this->invoice->fill($request->get('invoice'));
+
+        config([
+            'mail.mailers.smtp' => array_merge(
+                config('mail.mailers.smtp'),
+                $this->invoice->account->smtp_config
+            )
+        ]);
+
+        Mail::to($this->invoice->customer->email)
+            ->cc($this->invoice->email_cc)
+            ->bcc($this->invoice->email_bcc)
+            ->send(new InvoiceMail($this->invoice));
+
+        Alert::info('Email sent');
+
+        $this->invoice->email_sent_at = now();
+        $this->invoice->state = 'Sent';
+        $this->invoice->save();
     }
 }
