@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Resources;
 
+use App\Orchid\Filters\MyAccountsFilter;
 use Illuminate\Database\Eloquent\Model;
 use Orchid\Crud\Resource;
 use Orchid\Crud\ResourceRequest;
@@ -59,6 +60,8 @@ class AccountResource extends Resource
         return [
             TD::make('id'),
 
+            TD::make('selected'),
+
             TD::make('name'),
 
             TD::make('created_at', 'Date of creation')
@@ -82,6 +85,7 @@ class AccountResource extends Resource
     {
         return [
             Sight::make('id'),
+            Sight::make('selected'),
             Sight::make('name'),
             Sight::make('street'),
             Sight::make('building_number'),
@@ -102,7 +106,9 @@ class AccountResource extends Resource
      */
     public function filters(): array
     {
-        return [];
+        return [
+            MyAccountsFilter::class,
+        ];
     }
 
     public static function displayInNavigation(): bool
