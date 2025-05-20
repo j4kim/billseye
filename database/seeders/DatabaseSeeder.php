@@ -18,9 +18,9 @@ class DatabaseSeeder extends Seeder
     {
         Artisan::call('orchid:admin admin admin@billseye.ch admin');
 
-        $admin = User::firstWhere('name', 'admin');
+        $adminUser = User::firstWhere('name', 'admin');
 
-        $account = Account::create([
+        $s3dlAccount = Account::create([
             'email' => 'contact@3sdl.ch',
             'smtp_config' => [
                 'host' => 'mail.infomaniak.com',
@@ -36,10 +36,26 @@ class DatabaseSeeder extends Seeder
             'country' => 'CH',
         ]);
 
-        $admin->accounts()->attach($account, ['selected' => true]);
+        $testUser = User::factory()->create([
+            'name' => 'test',
+            'email' => 'test@billseye.ch',
+        ]);
+
+        $testAccount = Account::factory()->create();
+
+        $adminUser->accounts()->attach([
+            $s3dlAccount->id => ['selected' => true],
+            $testAccount->id => ['selected' => false],
+        ]);
+
+        $testUser->accounts()->attach($testAccount, ['selected' => true]);
 
         Customer::factory()->count(5)->create([
-            'account_id' => $account->id,
+            'account_id' => $s3dlAccount->id,
+        ]);
+
+        Customer::factory()->create([
+            'account_id' => $testAccount->id,
         ]);
     }
 }
