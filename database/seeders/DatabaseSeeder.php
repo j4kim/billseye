@@ -39,6 +39,7 @@ class DatabaseSeeder extends Seeder
         $testUser = User::factory()->create([
             'name' => 'test',
             'email' => 'test@billseye.ch',
+            'permissions' => ['platform.index' => true],
         ]);
 
         $testAccount = Account::factory()->create();
