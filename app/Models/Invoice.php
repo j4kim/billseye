@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Tools\QrBillGenerator;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -15,6 +16,14 @@ use Orchid\Screen\AsSource;
 class Invoice extends Model
 {
     use AsSource, Filterable;
+
+    protected static function booted(): void
+    {
+        // Scope only invoices attached to accounts attached to the current user
+        static::addGlobalScope('selectedAccount', function (Builder $builder) {
+            $builder->where('account_id', session('account.selectedId'));
+        });
+    }
 
     /**
      * @var array
