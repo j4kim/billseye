@@ -37,8 +37,11 @@ class Account extends Model
     #[Scope]
     protected function mine(Builder $query): void
     {
-        $query->join('account_user', 'accounts.id', '=', 'account_user.account_id')
-            ->where('account_user.user_id', auth()->id())
-            ->select('accounts.*', 'account_user.selected');
+        $query->whereIn('id', session('account.ids'));
+    }
+
+    public function isSelected(): bool
+    {
+        return $this->id === session('account.selectedId');
     }
 }

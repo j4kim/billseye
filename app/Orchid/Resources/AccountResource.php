@@ -60,9 +60,9 @@ class AccountResource extends Resource
         return [
             TD::make('id'),
 
-            TD::make('selected'),
-
-            TD::make('name'),
+            TD::make('name')->render(function ($model) {
+                return $model->name . ($model->isSelected() ? ' <span class="badge bg-primary">Selected</span>' : '');
+            }),
 
             TD::make('created_at', 'Date of creation')
                 ->render(function ($model) {
@@ -85,7 +85,9 @@ class AccountResource extends Resource
     {
         return [
             Sight::make('id'),
-            Sight::make('selected'),
+            Sight::make('selected')->render(function ($model) {
+                return $model->isSelected() ? ' <span class="badge bg-primary">Selected</span>' : '';
+            }),
             Sight::make('name'),
             Sight::make('street'),
             Sight::make('building_number'),
