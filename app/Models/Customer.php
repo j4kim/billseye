@@ -13,12 +13,11 @@ class Customer extends Model
 {
     use HasFactory, AsSource, Filterable;
 
-    /**
-     * Scope only customers attached to accounts attached to the current user
-     */
-    #[Scope]
-    protected function selectedAccounts(Builder $query): void
+    protected static function booted(): void
     {
-        $query->where('account_id', session('account.selectedId'));
+        // Scope only customers attached to accounts attached to the current user
+        static::addGlobalScope('selectedAccount', function (Builder $builder) {
+            $builder->where('account_id', session('account.selectedId'));
+        });
     }
 }

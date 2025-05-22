@@ -79,6 +79,9 @@ class User extends Authenticatable
 
     public function accounts(): BelongsToMany
     {
-        return $this->belongsToMany(Account::class)->withPivot('selected')->withTimestamps();
+        return $this->belongsToMany(Account::class)
+            ->withPivot('selected')
+            ->withTimestamps()
+            ->withoutGlobalScopes();
     }
 }

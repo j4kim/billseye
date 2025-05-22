@@ -3,7 +3,6 @@
 namespace App\Orchid\Resources;
 
 use App\Models\Account;
-use App\Orchid\Filters\MyAccountsFilter;
 use Orchid\Crud\Resource;
 use Orchid\Crud\ResourceRequest;
 use Orchid\Screen\Fields\CheckBox;
@@ -114,9 +113,7 @@ class AccountResource extends Resource
      */
     public function filters(): array
     {
-        return [
-            MyAccountsFilter::class,
-        ];
+        return [];
     }
 
     public static function displayInNavigation(): bool

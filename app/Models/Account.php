@@ -38,13 +38,12 @@ class Account extends Model
         return $this->belongsToMany(User::class)->withTimestamps();
     }
 
-    /**
-     * Scope only accounts attached to the current user
-     */
-    #[Scope]
-    protected function mine(Builder $query): void
+    protected static function booted(): void
     {
-        $query->whereIn('id', session('account.ids'));
+        // Scope only accounts attached to the current user
+        static::addGlobalScope('mine', function (Builder $builder) {
+            $builder->whereIn('id', session('account.ids') ?? []);
+        });
     }
 
     public function isSelected(): bool
