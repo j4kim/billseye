@@ -133,6 +133,9 @@ class AccountResource extends Resource
     public function onSave(ResourceRequest $request, Account $account)
     {
         $account->forceFill($request->except('selected'))->save();
+        if ($account->wasRecentlyCreated) {
+            $account->users()->attach(auth()->id(), ['selected' => false]);
+        }
         if ($request->selected) {
             $account->makeSelected();
         }
