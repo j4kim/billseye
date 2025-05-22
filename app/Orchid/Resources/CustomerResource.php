@@ -2,6 +2,7 @@
 
 namespace App\Orchid\Resources;
 
+use App\Orchid\Filters\CustomerFilter;
 use Orchid\Crud\Resource;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
@@ -93,7 +94,9 @@ class CustomerResource extends Resource
      */
     public function filters(): array
     {
-        return [];
+        return [
+            CustomerFilter::class,
+        ];
     }
 
     public static function displayInNavigation(): bool
