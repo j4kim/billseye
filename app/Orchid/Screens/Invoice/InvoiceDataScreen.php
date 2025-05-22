@@ -54,17 +54,9 @@ class InvoiceDataScreen extends InvoiceBaseScreen
             Layout::rows([
 
                 Group::make([
-                    Relation::make('invoice.account_id')
-                        ->title('Creditor')
-                        ->fromModel(Account::class, 'name')
-                        ->required(),
-
                     Relation::make('invoice.customer_id')
-                        ->title('Debtor')
+                        ->title('Customer')
                         ->fromModel(Customer::class, 'name'),
-                ]),
-
-                Group::make([
                     DateTimer::make('invoice.date')
                         ->title('Date')
                         ->format('Y-m-d')
@@ -131,7 +123,9 @@ class InvoiceDataScreen extends InvoiceBaseScreen
      */
     public function create(Request $request)
     {
-        $this->invoice->fill($request->get('invoice'))->save();
+        $this->invoice->fill($request->get('invoice'));
+        $this->invoice->account_id = session('account.selectedId');
+        $this->invoice->save();
         Alert::info('You have successfully created an invoice.');
         return redirect()->route('platform.invoice.edit.items', $this->invoice);
     }
