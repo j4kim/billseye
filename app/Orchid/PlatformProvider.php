@@ -64,7 +64,7 @@ class PlatformProvider extends OrchidServiceProvider
                     )->toArray()
                 )
                 ->divider()
-                ->canSee(count(session('account.ids')) > 1),
+                ->canSee(count(session('account.ids')) > 1 || !session('account.selectedId')),
 
             Menu::make(__('Users'))
                 ->icon('bs.people')
