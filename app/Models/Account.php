@@ -46,6 +46,17 @@ class Account extends Model
         return $this->id === session('account.selectedId');
     }
 
+    public static function storeInSession()
+    {
+        $accounts = auth()->user()->accounts;
+        $selected = $accounts->where('pivot.selected')->first();
+        session(['account' => [
+            'ids' => $accounts->pluck('id')->toArray(),
+            'selected' => $selected,
+            'selectedId' => $selected->id,
+        ]]);
+    }
+
     public function makeSelected()
     {
         DB::table('account_user')

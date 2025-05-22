@@ -136,6 +136,6 @@ class AccountResource extends Resource
         if ($request->selected) {
             $account->makeSelected();
         }
-        session()->forget('account');
+        Account::storeInSession();
     }
 }
