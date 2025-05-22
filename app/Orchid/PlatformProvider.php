@@ -51,6 +51,20 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.resource.list', ['account-resources'])
                 ->divider(),
 
+            Menu::make(session('account.selected.name'))
+                ->title('Selected account')
+                ->icon('person-badge')
+                ->list(
+                    collect(
+                        session('account.names')
+                    )->filter(
+                        fn($id) => $id != session('account.selectedId')
+                    )->map(
+                        fn($id, $name) => Menu::make("$name")->route('platform.account.make-selected', [$id])
+                    )->toArray()
+                )
+                ->divider()
+                ->canSee(count(session('account.ids')) > 1),
 
             Menu::make(__('Users'))
                 ->icon('bs.people')

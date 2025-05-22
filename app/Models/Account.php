@@ -52,6 +52,7 @@ class Account extends Model
         $selected = $accounts->where('pivot.selected')->first();
         session(['account' => [
             'ids' => $accounts->pluck('id')->toArray(),
+            'names' => $accounts->pluck('id', 'name')->toArray(),
             'selected' => $selected,
             'selectedId' => $selected->id,
         ]]);
