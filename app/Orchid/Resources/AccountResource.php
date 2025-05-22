@@ -133,7 +133,7 @@ class AccountResource extends Resource
         if ($account->wasRecentlyCreated) {
             $account->users()->attach(auth()->id(), ['selected' => false]);
         }
-        if ($request->selected) {
+        if ($request->selected || !session('account.selectedId')) {
             $account->makeSelected();
         }
         Account::storeInSession();
