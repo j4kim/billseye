@@ -40,11 +40,13 @@ class PlatformProvider extends OrchidServiceProvider
 
             Menu::make('Invoices')
                 ->icon('file-earmark-text')
-                ->route('platform.invoice.list'),
+                ->route('platform.invoice.list')
+                ->canSee(!!session('account.selected')),
 
             Menu::make('Customers')
                 ->icon('people')
-                ->route('platform.resource.list', ['customer-resources']),
+                ->route('platform.resource.list', ['customer-resources'])
+                ->canSee(!!session('account.selected')),
 
             Menu::make('Accounts')
                 ->icon('person-badge')
