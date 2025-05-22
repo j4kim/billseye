@@ -138,4 +138,17 @@ class AccountResource extends Resource
         }
         Account::storeInSession();
     }
+
+    /**
+     * Action to delete a model
+     *
+     * @param Account $account
+     *
+     * @throws Exception
+     */
+    public function onDelete(Account $account)
+    {
+        $account->delete();
+        Account::storeInSession();
+    }
 }
