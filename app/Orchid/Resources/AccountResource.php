@@ -49,6 +49,7 @@ class AccountResource extends Resource
                 Input::make('smtp_config.password')->title('SMTP password'),
             ]),
             CheckBox::make('selected')
+                ->value(request()->route('id') == session('account.selectedId'))
                 ->disabled(request()->route('id') == session('account.selectedId'))
                 ->title('Selected')
                 ->placeholder('Select this account'),
