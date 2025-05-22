@@ -86,6 +86,7 @@ class InvoiceDataScreen extends InvoiceBaseScreen
                         ->title('Amount')
                         ->type('number')
                         ->help('The total amount of the invoice')
+                        ->value(0)
                         ->disabled($this->invoice ? $this->invoice->invoiceItems()->exists() : false),
 
                     Input::make('invoice.discount')
