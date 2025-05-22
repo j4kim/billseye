@@ -123,8 +123,13 @@ class InvoiceDataScreen extends InvoiceBaseScreen
      */
     public function create(Request $request)
     {
+        $accountId = session('account.selectedId');
+        if (!$accountId) {
+            Alert::error("No account selected");
+            abort(400);
+        }
         $this->invoice->fill($request->get('invoice'));
-        $this->invoice->account_id = session('account.selectedId');
+        $this->invoice->account_id = $accountId;
         $this->invoice->save();
         Alert::info('You have successfully created an invoice.');
         return redirect()->route('platform.invoice.edit.items', $this->invoice);
