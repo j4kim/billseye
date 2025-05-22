@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\DB;
 use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
 
@@ -43,5 +44,16 @@ class Account extends Model
     public function isSelected(): bool
     {
         return $this->id === session('account.selectedId');
+    }
+
+    public function makeSelected()
+    {
+        DB::table('account_user')
+            ->where('user_id', auth()->id())
+            ->update(['selected' => false]);
+        DB::table('account_user')
+            ->where('user_id', auth()->id())
+            ->where('account_id', $this->id)
+            ->update(['selected' => true]);
     }
 }

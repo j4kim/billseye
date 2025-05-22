@@ -2,10 +2,11 @@
 
 namespace App\Orchid\Resources;
 
+use App\Models\Account;
 use App\Orchid\Filters\MyAccountsFilter;
-use Illuminate\Database\Eloquent\Model;
 use Orchid\Crud\Resource;
 use Orchid\Crud\ResourceRequest;
+use Orchid\Screen\Fields\CheckBox;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
@@ -47,6 +48,10 @@ class AccountResource extends Resource
                 Input::make('smtp_config.port')->value(587)->title('SMTP port'),
                 Input::make('smtp_config.password')->title('SMTP password'),
             ]),
+            CheckBox::make('selected')
+                ->disabled(request()->route('id') == session('account.selectedId'))
+                ->title('Selected')
+                ->placeholder('Select this account'),
         ];
     }
 
@@ -116,5 +121,20 @@ class AccountResource extends Resource
     public static function displayInNavigation(): bool
     {
         return false;
+    }
+
+    /**
+     * Action to create and update the model
+     *
+     * @param ResourceRequest $request
+     * @param Account         $Account
+     */
+    public function onSave(ResourceRequest $request, Account $account)
+    {
+        $account->forceFill($request->except('selected'))->save();
+        if ($request->selected) {
+            $account->makeSelected();
+        }
+        session()->forget('account');
     }
 }
