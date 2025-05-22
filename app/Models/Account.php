@@ -60,7 +60,7 @@ class Account extends Model
             'ids' => $accounts->pluck('id')->toArray(),
             'names' => $accounts->pluck('id', 'name')->toArray(),
             'selected' => $selected,
-            'selectedId' => $selected->id,
+            'selectedId' => $selected?->id,
         ]]);
     }
 

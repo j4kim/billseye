@@ -51,7 +51,7 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('platform.resource.list', ['account-resources'])
                 ->divider(),
 
-            Menu::make(session('account.selected.name'))
+            Menu::make(session('account.selected.name') ?? 'No account selected')
                 ->title('Selected account')
                 ->icon('person-badge')
                 ->list(
