@@ -148,6 +148,7 @@ class AccountResource extends Resource
      */
     public function onDelete(Account $account)
     {
+        $account->users()->detach();
         $account->delete();
         Account::storeInSession();
     }
