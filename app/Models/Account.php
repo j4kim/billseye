@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
@@ -40,6 +41,7 @@ class Account extends Model
 
     protected static function booted(): void
     {
+        if (App::runningInConsole()) return;
         // Scope only accounts attached to the current user
         static::addGlobalScope('mine', function (Builder $builder) {
             $builder->whereIn('id', session('account.ids') ?? []);

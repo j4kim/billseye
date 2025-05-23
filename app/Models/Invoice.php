@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
 use Orchid\Filters\Filterable;
 use Orchid\Filters\Types\Like;
@@ -19,6 +20,7 @@ class Invoice extends Model
 
     protected static function booted(): void
     {
+        if (App::runningInConsole()) return;
         // Scope only invoices attached to accounts attached to the current user
         static::addGlobalScope('selectedAccount', function (Builder $builder) {
             $builder->where('account_id', session('account.selectedId'));
