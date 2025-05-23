@@ -2,11 +2,14 @@
 
 namespace App\Orchid\Resources;
 
+use App\Models\Customer;
 use Orchid\Crud\Resource;
+use Orchid\Crud\ResourceRequest;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
+use Orchid\Support\Facades\Alert;
 
 class CustomerResource extends Resource
 {
@@ -99,5 +102,23 @@ class CustomerResource extends Resource
     public static function displayInNavigation(): bool
     {
         return false;
+    }
+
+    /**
+     * Action to create and update the model
+     *
+     * @param ResourceRequest $request
+     * @param Customer        $customer
+     */
+    public function onSave(ResourceRequest $request, Customer $customer)
+    {
+        $accountId = session('account.selectedId');
+        if (!$accountId) {
+            Alert::error("No account selected");
+            abort(400);
+        }
+        $customer->account_id = $accountId;
+        $customer->forceFill($request->all());
+        $customer->save();
     }
 }

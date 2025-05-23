@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\SetUserAccountIds;
+
 return [
 
     /*
@@ -46,7 +48,12 @@ return [
 
     'middleware' => [
         'public'  => ['web', 'cache.headers:private;must_revalidate;etag'],
-        'private' => ['web', 'platform', 'cache.headers:private;must_revalidate;etag'],
+        'private' => [
+            'web',
+            'platform',
+            SetUserAccountIds::class,
+            'cache.headers:private;must_revalidate;etag'
+        ],
     ],
 
     /*

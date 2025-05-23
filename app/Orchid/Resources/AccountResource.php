@@ -2,9 +2,10 @@
 
 namespace App\Orchid\Resources;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Account;
 use Orchid\Crud\Resource;
 use Orchid\Crud\ResourceRequest;
+use Orchid\Screen\Fields\CheckBox;
 use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
@@ -46,6 +47,11 @@ class AccountResource extends Resource
                 Input::make('smtp_config.port')->value(587)->title('SMTP port'),
                 Input::make('smtp_config.password')->title('SMTP password'),
             ]),
+            CheckBox::make('selected')
+                ->value(session('account.selectedId') && request()->route('id') == session('account.selectedId'))
+                ->disabled(session('account.selectedId') && request()->route('id') == session('account.selectedId'))
+                ->title('Selected')
+                ->placeholder('Select this account'),
         ];
     }
 
@@ -59,7 +65,9 @@ class AccountResource extends Resource
         return [
             TD::make('id'),
 
-            TD::make('name'),
+            TD::make('name')->render(function ($model) {
+                return $model->name . ($model->isSelected() ? ' <span class="badge bg-primary">Selected</span>' : '');
+            }),
 
             TD::make('created_at', 'Date of creation')
                 ->render(function ($model) {
@@ -82,6 +90,9 @@ class AccountResource extends Resource
     {
         return [
             Sight::make('id'),
+            Sight::make('selected')->render(function ($model) {
+                return $model->isSelected() ? ' <span class="badge bg-primary">Selected</span>' : '';
+            }),
             Sight::make('name'),
             Sight::make('street'),
             Sight::make('building_number'),
@@ -108,5 +119,37 @@ class AccountResource extends Resource
     public static function displayInNavigation(): bool
     {
         return false;
+    }
+
+    /**
+     * Action to create and update the model
+     *
+     * @param ResourceRequest $request
+     * @param Account         $Account
+     */
+    public function onSave(ResourceRequest $request, Account $account)
+    {
+        $account->forceFill($request->except('selected'))->save();
+        if ($account->wasRecentlyCreated) {
+            $account->users()->attach(auth()->id(), ['selected' => false]);
+        }
+        if ($request->selected || !session('account.selectedId')) {
+            $account->makeSelected();
+        }
+        Account::storeInSession();
+    }
+
+    /**
+     * Action to delete a model
+     *
+     * @param Account $account
+     *
+     * @throws Exception
+     */
+    public function onDelete(Account $account)
+    {
+        $account->users()->detach();
+        $account->delete();
+        Account::storeInSession();
     }
 }

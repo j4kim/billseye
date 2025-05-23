@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Account;
 use App\Models\Invoice;
 use App\Orchid\Screens\Invoice\InvoiceDataScreen;
 use App\Orchid\Screens\Invoice\InvoiceItemsScreen;
@@ -141,3 +142,9 @@ Route::get('invoice/{invoice}/pdf', function (Invoice $invoice) {
 Route::get('invoice/{invoice}/pdf/download', function (Invoice $invoice) {
     return Storage::download($invoice->pdf_path, $invoice->pdfFilename);
 })->name('platform.invoice.pdf.download');
+
+Route::get('accounts/{account}/make-selected', function (Account $account) {
+    $account->makeSelected();
+    Account::storeInSession();
+    return redirect()->back();
+})->name('platform.account.make-selected');

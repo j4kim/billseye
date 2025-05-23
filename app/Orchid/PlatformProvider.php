@@ -40,17 +40,37 @@ class PlatformProvider extends OrchidServiceProvider
 
             Menu::make('Invoices')
                 ->icon('file-earmark-text')
-                ->route('platform.invoice.list'),
+                ->route('platform.invoice.list')
+                ->canSee(!!session('account.selected')),
 
             Menu::make('Customers')
                 ->icon('people')
-                ->route('platform.resource.list', ['customer-resources']),
+                ->route('platform.resource.list', ['customer-resources'])
+                ->canSee(!!session('account.selected')),
 
             Menu::make('Accounts')
                 ->icon('person-badge')
                 ->route('platform.resource.list', ['account-resources'])
                 ->divider(),
 
+            Menu::make(session('account.selected.name') ?? 'No account selected')
+                ->title('Selected account')
+                ->icon('person-badge')
+                ->list(
+                    collect(
+                        session('account.names')
+                    )->filter(
+                        fn($id) => $id != session('account.selectedId')
+                    )->map(
+                        fn($id, $name) => Menu::make("$name")->route('platform.account.make-selected', [$id])
+                    )->toArray()
+                )
+                ->divider()
+                ->canSee(
+                    count(session('account.ids')) > 1
+                        ||
+                        count(session('account.ids')) == 1 && !session('account.selected')
+                ),
 
             Menu::make(__('Users'))
                 ->icon('bs.people')
