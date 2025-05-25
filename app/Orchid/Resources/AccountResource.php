@@ -10,6 +10,7 @@ use Orchid\Screen\Fields\Group;
 use Orchid\Screen\Fields\Input;
 use Orchid\Screen\Sight;
 use Orchid\Screen\TD;
+use Orchid\Support\Facades\Alert;
 
 class AccountResource extends Resource
 {
@@ -148,6 +149,10 @@ class AccountResource extends Resource
      */
     public function onDelete(Account $account)
     {
+        if ($account->id == session('account.selected.id')) {
+            Alert::error("You cannot delete your selected account");
+            abort(400);
+        }
         $account->users()->detach();
         $account->delete();
         Account::storeInSession();
