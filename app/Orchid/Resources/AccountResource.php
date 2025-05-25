@@ -49,8 +49,8 @@ class AccountResource extends Resource
                 Input::make('smtp_config.password')->title('SMTP password'),
             ]),
             CheckBox::make('selected')
-                ->value(session('account.selectedId') && request()->route('id') == session('account.selectedId'))
-                ->disabled(session('account.selectedId') && request()->route('id') == session('account.selectedId'))
+                ->value(session('account.selected') && request()->route('id') == session('account.selected.id'))
+                ->disabled(session('account.selected') && request()->route('id') == session('account.selected.id'))
                 ->title('Selected')
                 ->placeholder('Select this account'),
         ];
@@ -132,9 +132,9 @@ class AccountResource extends Resource
     {
         $account->forceFill($request->except('selected'))->save();
         if ($account->wasRecentlyCreated) {
-            $account->users()->attach(auth()->id(), ['selected' => false]);
+            $account->users()->attach(auth()->id());
         }
-        if ($request->selected || !session('account.selectedId')) {
+        if ($request->selected || !session('account.selected')) {
             $account->makeSelected();
         }
         Account::storeInSession();

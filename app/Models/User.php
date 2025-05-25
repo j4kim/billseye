@@ -24,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'selected_account_id',
     ];
 
     /**
@@ -80,7 +81,6 @@ class User extends Authenticatable
     public function accounts(): BelongsToMany
     {
         return $this->belongsToMany(Account::class)
-            ->withPivot('selected')
             ->withTimestamps()
             ->withoutGlobalScopes();
     }

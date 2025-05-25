@@ -44,12 +44,11 @@ class DatabaseSeeder extends Seeder
 
         $testAccount = Account::factory()->create();
 
-        $adminUser->accounts()->attach([
-            $s3dlAccount->id => ['selected' => true],
-            $testAccount->id => ['selected' => false],
-        ]);
+        $adminUser->accounts()->attach([$s3dlAccount->id, $testAccount->id]);
+        $adminUser->update(['selected_account_id' => $s3dlAccount->id]);
 
-        $testUser->accounts()->attach($testAccount, ['selected' => true]);
+        $testUser->accounts()->attach($testAccount->id);
+        $testUser->update(['selected_account_id' => $testAccount->id]);
 
         Customer::factory()->count(5)->create([
             'account_id' => $s3dlAccount->id,

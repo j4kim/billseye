@@ -23,7 +23,7 @@ class Invoice extends Model
         if (App::runningInConsole()) return;
         // Scope only invoices attached to accounts attached to the current user
         static::addGlobalScope('selectedAccount', function (Builder $builder) {
-            $builder->where('account_id', session('account.selectedId'));
+            $builder->where('account_id', session('account.selected.id'));
         });
     }
 

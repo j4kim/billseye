@@ -45,7 +45,7 @@ class InvoiceListScreen extends Screen
             Link::make('Create Invoice')
                 ->icon('plus-circle')
                 ->route('platform.invoice.new')
-                ->canSee(!!session('account.selectedId'))
+                ->canSee(!!session('account.selected.id'))
         ];
     }
 

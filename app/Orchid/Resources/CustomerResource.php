@@ -112,7 +112,7 @@ class CustomerResource extends Resource
      */
     public function onSave(ResourceRequest $request, Customer $customer)
     {
-        $accountId = session('account.selectedId');
+        $accountId = session('account.selected.id');
         if (!$accountId) {
             Alert::error("No account selected");
             abort(400);

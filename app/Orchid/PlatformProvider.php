@@ -60,7 +60,7 @@ class PlatformProvider extends OrchidServiceProvider
                     collect(
                         session('account.names')
                     )->filter(
-                        fn($id) => $id != session('account.selectedId')
+                        fn($id) => $id != session('account.selected.id')
                     )->map(
                         fn($id, $name) => Menu::make("$name")->route('platform.account.make-selected', [$id])
                     )->toArray()

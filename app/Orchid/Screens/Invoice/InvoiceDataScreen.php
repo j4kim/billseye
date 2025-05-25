@@ -123,7 +123,7 @@ class InvoiceDataScreen extends InvoiceBaseScreen
      */
     public function create(Request $request)
     {
-        $accountId = session('account.selectedId');
+        $accountId = session('account.selected.id');
         if (!$accountId) {
             Alert::error("No account selected");
             abort(400);
