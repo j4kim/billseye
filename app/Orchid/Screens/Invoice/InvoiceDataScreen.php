@@ -56,7 +56,9 @@ class InvoiceDataScreen extends InvoiceBaseScreen
                 Group::make([
                     Relation::make('invoice.customer_id')
                         ->title('Customer')
-                        ->fromModel(Customer::class, 'name'),
+                        ->fromModel(Customer::class, 'name')
+                        ->allowEmpty(),
+
                     DateTimer::make('invoice.date')
                         ->title('Date')
                         ->format('Y-m-d')
