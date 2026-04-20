@@ -74,7 +74,7 @@ class Invoice extends Model
             fn() => $this->date->format('Y_m_d_')
                 . __('invoice') . '_' . $this->id . '_'
                 . Str::slug($this->account->name, '_') . '_'
-                . Str::slug($this->customer->name, '_')
+                . Str::slug($this->customer?->name ?? '', '_')
                 . '.pdf'
         );
     }
