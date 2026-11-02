@@ -146,5 +146,5 @@ Route::get('invoice/{invoice}/pdf/download', function (Invoice $invoice) {
 Route::get('accounts/{account}/make-selected', function (Account $account) {
     $account->makeSelected();
     Account::storeInSession();
-    return redirect()->back();
+    return redirect()->route('platform.invoice.list');
 })->name('platform.account.make-selected');

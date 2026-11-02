@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Account;
 use App\Models\Customer;
+use App\Models\Invoice;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -50,12 +51,18 @@ class DatabaseSeeder extends Seeder
         $testUser->accounts()->attach($testAccount->id);
         $testUser->update(['selected_account_id' => $testAccount->id]);
 
-        Customer::factory()->count(5)->create([
-            'account_id' => $s3dlAccount->id,
-        ]);
+        Customer::factory()->count(5)
+            ->has(Invoice::factory()->state([
+                'account_id' => $s3dlAccount->id,
+            ]))->create([
+                'account_id' => $s3dlAccount->id,
+            ]);
 
-        Customer::factory()->create([
-            'account_id' => $testAccount->id,
-        ]);
+        Customer::factory()
+            ->has(Invoice::factory()->state([
+                'account_id' => $testAccount->id,
+            ]))->create([
+                'account_id' => $testAccount->id,
+            ]);
     }
 }

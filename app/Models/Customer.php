@@ -6,6 +6,7 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\App;
 use Orchid\Filters\Filterable;
 use Orchid\Screen\AsSource;
@@ -21,5 +22,10 @@ class Customer extends Model
         static::addGlobalScope('selectedAccount', function (Builder $builder) {
             $builder->where('account_id', session('account.selected.id'));
         });
+    }
+
+    public function invoices(): HasMany
+    {
+        return $this->hasMany(Invoice::class);
     }
 }
