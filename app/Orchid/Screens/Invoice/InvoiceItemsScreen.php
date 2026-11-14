@@ -80,7 +80,7 @@ class InvoiceItemsScreen extends InvoiceBaseScreen
             Layout::modal('editInvoiceItemModal', [
                 Layout::rows([
                     Input::make('invoiceItem.description')->title('Description')->required(),
-                    Input::make('invoiceItem.quantity')->title('Quantity')->type('number')->value(1),
+                    Input::make('invoiceItem.quantity')->title('Quantity')->type('number')->value(1)->step(0.1),
                     Input::make('invoiceItem.unit_price')->title('Unit price'),
                 ]),
             ])->title('Edit invoice item')->applyButton('Save')->deferred('loadInvoiceItemModal'),
