@@ -12,7 +12,7 @@
         "laravel/tinker": "^3.0",
         "orchid/crud": "^4.4",
         "orchid/platform": "^14.52",
-        "sprain/swiss-qr-bill": "^4.20"
+        "sprain/swiss-qr-bill": "5.3.1"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
