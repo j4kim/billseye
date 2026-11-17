@@ -52,7 +52,7 @@ class InvoicePdfScreen extends InvoiceBaseScreen
     {
         $html = view('invoice.preview', ['invoice' => $this->invoice])->render();
         $pdf = PdfService::createPdf($html);
-        $path = "{$this->invoice->id}.pdf";
+        $path = 'billseye/' . app()->environment() . '/invoices/' . $this->invoice->id . '.pdf';
         if (Storage::put($path, $pdf)) {
             $this->invoice->pdf_path = $path;
             $this->invoice->pdf_generated_at = now();

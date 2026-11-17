@@ -13,7 +13,7 @@ php artisan migrate --seed
 ## Run
 
 ```
-composer run dev
+php artisan serve --port 6412
 ```
 
 Navigate to http://localhost:6412/.
