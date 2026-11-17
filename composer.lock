@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "68a5d24f8804d249781a5539c3c197ba",
+    "content-hash": "980d6630b46e4d3f588771c9f34b82f1",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -3922,16 +3922,16 @@
         },
         {
             "name": "sprain/swiss-qr-bill",
-            "version": "v4.20",
+            "version": "v5.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sprain/php-swiss-qr-bill.git",
-                "reference": "8f709ab60426c9b6cbc43fb03dee364071eda044"
+                "reference": "e139c4287bb55ceefc13b2773a0383c01a61c69e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sprain/php-swiss-qr-bill/zipball/8f709ab60426c9b6cbc43fb03dee364071eda044",
-                "reference": "8f709ab60426c9b6cbc43fb03dee364071eda044",
+                "url": "https://api.github.com/repos/sprain/php-swiss-qr-bill/zipball/e139c4287bb55ceefc13b2773a0383c01a61c69e",
+                "reference": "e139c4287bb55ceefc13b2773a0383c01a61c69e",
                 "shasum": ""
             },
             "require": {
@@ -3939,14 +3939,11 @@
                 "ext-bcmath": "*",
                 "ext-dom": "*",
                 "kmukku/php-iso11649": "^1.5",
-                "php": "~8.1.0|~8.2.0|~8.3.0|~8.4.0",
-                "symfony/intl": "^4.4|^5.0|^6.0|^7.0",
+                "php": "~8.1.0|~8.2.0|~8.3.0|~8.4.0|~8.5.0",
+                "symfony/intl": "^6.3|^7.0|^8.0",
                 "symfony/polyfill-intl-icu": "^1.23",
                 "symfony/polyfill-mbstring": "^1.30",
-                "symfony/validator": "^4.4|^5.0|^6.0|^7.0"
-            },
-            "conflict": {
-                "khanamiryan/qrcode-detector-decoder": "1.0.6"
+                "symfony/validator": "^6.3|^7.0|^8.0"
             },
             "require-dev": {
                 "dg/bypass-finals": "^1.8",
@@ -3981,7 +3978,7 @@
             "description": "A PHP library to create Swiss QR bills",
             "support": {
                 "issues": "https://github.com/sprain/php-swiss-qr-bill/issues",
-                "source": "https://github.com/sprain/php-swiss-qr-bill/tree/v4.20"
+                "source": "https://github.com/sprain/php-swiss-qr-bill/tree/v5.3.1"
             },
             "funding": [
                 {
@@ -3989,7 +3986,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-02-25T08:57:29+00:00"
+            "time": "2026-09-29T08:48:18+00:00"
         },
         {
             "name": "symfony/clock",
